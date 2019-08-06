@@ -75,6 +75,10 @@
     "react"
   ],
   "dependencies": {
-    "react-use-form-state": "^0.11.0"
+    "firebase": "^6.3.4",
+    "react-use-form-state": "^0.11.0",
+    "uploods": "^0.5.1",
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.2.1"
   }
 }

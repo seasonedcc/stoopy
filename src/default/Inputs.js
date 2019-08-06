@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   CircularProgress,
   FormControl,
@@ -9,21 +9,17 @@ import {
   MenuItem,
   Select,
   TextField,
-  InputLabel,
-} from '@material-ui/core'
-import { DropPicture } from 'uploods'
-import Container from 'ui/Container'
-import startCase from 'lodash/startCase'
-import theme from 'theme'
+  Checkbox,
+  InputLabel
+} from "@material-ui/core";
+import { DropPicture } from "uploods";
+import startCase from "lodash/startCase";
 
 const DateTimeInput = props => {
-  return null
-}
+  return null;
+};
 
 const CheckboxInput = props => {
-  return null
-}
-const RadioInput = ({ label, setValue }) => {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Gender</FormLabel>
@@ -39,24 +35,44 @@ const RadioInput = ({ label, setValue }) => {
         />
       </RadioGroup>
     </FormControl>
-  )
-}
-export const SelectInput = ({ label, options, ...props }) => {
+  );
+};
+
+// What to do about booleans?
+export const RadioInput = ({ label, choices, ...props }) => {
+  return (
+    <FormControl component="fieldset">
+      <FormLabel component="legend">{label}</FormLabel>
+      <RadioGroup {...props}>
+        {choices.map(choice => {
+          const opts =
+            typeof choice === "object"
+              ? choice
+              : {
+                  label: choice,
+                  value: choice
+                };
+          return <FormControlLabel control={<Radio />} {...opts} />;
+        })}
+      </RadioGroup>
+    </FormControl>
+  );
+};
+export const SelectInput = ({ label, value, choices, ...props }) => {
   return (
     <FormControl style={{ minWidth: 120 }}>
       <InputLabel>{label}</InputLabel>
       <Select
-        inputProps={{ name: 'estadocivil' }}
         onChange={value => props.setValue(value.target.value)}
-        value={props.formState.values.maritalStatus}
+        value={value}
       >
-        {options.map(option => (
-          <MenuItem value={option}>{option}</MenuItem>
+        {choices.map(choice => (
+          <MenuItem value={choice}>{choice}</MenuItem>
         ))}
       </Select>
     </FormControl>
-  )
-}
+  );
+};
 
 export const DropAvatar = props => {
   return (
@@ -64,24 +80,24 @@ export const DropAvatar = props => {
       maxDimension={200}
       config={{
         apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET
       }}
       {...props}
     />
-  )
-}
+  );
+};
 
 export const Input = ({
   children,
   disabled,
   name,
   error,
-  helper = ' ',
+  helper = " ",
   label = startCase(name),
   placeholder = label,
   ...props
 }) => {
-  const helperText = error || helper
+  const helperText = error || helper;
   return (
     <TextField
       {...props}
@@ -94,8 +110,8 @@ export const Input = ({
       helperText={helperText}
       disabled={disabled}
       style={{
-        marginBottom: theme.spacing(1),
+        marginBottom: 10
       }}
     />
-  )
-}
+  );
+};
