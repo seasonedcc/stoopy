@@ -1,15 +1,15 @@
 {
-  "name": "@seasonedsoftware/new-react-lib",
+  "name": "@seasonedsoftware/stoopy",
   "version": "0.0.0",
-  "description": "LIBRARY_NAME description",
+  "description": "Stoopy description",
   "author": "SeasonedSoftware",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SeasonedSoftware/new-react-lib.git"
+    "url": "git+https://github.com/SeasonedSoftware/stoopy.git"
   },
-  "main": "dist/new-react-lib.cjs.js",
-  "module": "dist/new-react-lib.esm.js",
+  "main": "dist/stoopy.cjs.js",
+  "module": "dist/stoopy.esm.js",
   "types": "dist/types/index.d.ts",
   "engines": {
     "node": ">=8",
@@ -64,12 +64,17 @@
     "dist"
   ],
   "bugs": {
-    "url": "https://github.com/SeasonedSoftware/new-react-lib/issues"
+    "url": "https://github.com/SeasonedSoftware/stoopy/issues"
   },
-  "homepage": "https://github.com/SeasonedSoftware/new-react-lib#readme",
+  "homepage": "https://github.com/SeasonedSoftware/stoopy#readme",
   "directories": {
     "doc": "docs",
     "example": "example"
   },
-  "keywords": ["react"]
+  "keywords": [
+    "react"
+  ],
+  "dependencies": {
+    "react-use-form-state": "^0.11.0"
+  }
 }

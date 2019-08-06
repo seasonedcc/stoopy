@@ -3,20 +3,20 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import prism from 'react-syntax-highlighter/dist/esm/styles/prism/prism'
 import { Card, CardHeader, CardContent } from '@material-ui/core'
 
-import { LIBRARY_NAME } from '@seasonedsoftware/new-react-lib'
+import { Stoopy } from '@seasonedsoftware/stoopy'
 
 const Example = () => (
   <Card elevation={5} className="rating">
     <CardHeader title="My sample" />
     <CardContent>
-      <LIBRARY_NAME />
+      <Stoopy />
     </CardContent>
     <SyntaxHighlighter language="javascript" style={prism}>
       {`
-import { LIBRARY_NAME } from '@seasonedsoftware/new-react-lib'
+import { Stoopy } from '@seasonedsoftware/stoopy'
 
 // MyComponent
-<LIBRARY_NAME />
+<Stoopy />
       `}
     </SyntaxHighlighter>
   </Card>
