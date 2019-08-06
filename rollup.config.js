@@ -1,18 +1,18 @@
-import commonjs from 'rollup-plugin-commonjs'
-import uglify from 'rollup-plugin-uglify'
-import resolve from 'rollup-plugin-node-resolve'
-import external from 'rollup-plugin-peer-deps-external'
-import babel from 'rollup-plugin-babel'
-import json from 'rollup-plugin-json'
-import postcss from 'rollup-plugin-postcss'
-import pkg from './package.json'
+import commonjs from "rollup-plugin-commonjs";
+import uglify from "rollup-plugin-uglify";
+import resolve from "rollup-plugin-node-resolve";
+import external from "rollup-plugin-peer-deps-external";
+import babel from "rollup-plugin-babel";
+import json from "rollup-plugin-json";
+import postcss from "rollup-plugin-postcss";
+import pkg from "./package.json";
 
-const extensions = ['.js', '.jsx', '.ts', '.tsx']
+const extensions = [".js", ".jsx", ".ts", ".tsx"];
 
 const config = {
-  input: './src/index.ts',
+  input: "./src/index.ts",
   // Specify here external modules which you don't want to include in your bundle (for instance: 'lodash', 'moment' etc.)
-  external: ['react', 'react-dom'],
+  external: ["react", "react-dom"],
   plugins: [
     // Allows node_modules resolution
     resolve({ extensions }),
@@ -22,29 +22,33 @@ const config = {
     // Allow bundling cjs modules. Rollup doesn't understand cjs
     commonjs({
       include: /node_modules/,
+      // Fix for material-ui and perhaps other libs
+      namedExports: {
+        "node_modules/react-is/index.js": ["ForwardRef"]
+      }
     }),
     json(),
     // Compile TypeScript/JavaScript files
-    babel({ extensions, include: ['src/**/*'], exclude: 'node_modules/**' }),
-    external(),
+    babel({ extensions, include: ["src/**/*"], exclude: "node_modules/**" }),
+    external()
   ],
 
   output: [
     {
       file: pkg.main,
-      format: 'cjs',
-      exports: 'named',
+      format: "cjs",
+      exports: "named"
     },
     {
       file: pkg.module,
-      format: 'es',
-      exports: 'named',
-    },
-  ],
+      format: "es",
+      exports: "named"
+    }
+  ]
+};
+
+if (process.env.NODE_ENV === "production") {
+  config.plugins.push(uglify());
 }
 
-if (process.env.NODE_ENV === 'production') {
-  config.plugins.push(uglify())
-}
-
-export default config
+export default config;
