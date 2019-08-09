@@ -14,7 +14,8 @@ const BookInfo = props => {
       </h1>
       <small>{props.year}</small>
       <img src={props.cover} />
-      <p>{props.onSale === "true" ? "On Sale!" : "Not on Sale :("}</p>
+      <p>Contact Channel: {props.contactChannel}</p>
+      <p>{props.termsAgreement ? "Agreed!" : "Did not agree yet!"}</p>
       <p>{props.description}</p>
       <p>
         <b>Genre:</b>
@@ -28,8 +29,10 @@ const Example = () => {
   const emptyBook = {
     name: undefined,
     year: undefined,
+    description: undefined,
     cover: undefined,
-    onSale: undefined,
+    termsAgreement: undefined,
+    contactChannel: undefined,
     description: undefined,
     genre: undefined
   };
@@ -37,31 +40,39 @@ const Example = () => {
   console.log("Book", book);
   return (
     <Card elevation={5} className="rating">
-      <CardHeader title="My sample" />
+      <CardHeader title="Stoopy" />
       <CardContent>
         <Stoopy
           onNext={setBook}
           target={book}
           fields={[
             {
-              name: "onSale",
-              type: "radio",
-              props: {
-                choices: [
-                  { label: "on", value: "true" },
-                  { label: "off", value: "false" }
-                ]
-              }
-            },
-            {
               name: "genre",
               type: "select",
-              props: { choices: ["sci-fi", "drama", "fantasy"] }
+              choices: ["sci-fi", "drama", "fantasy"]
             },
             "name",
 
-            { name: "year", type: "number" },
-            { name: "cover", type: "avatar" }
+            { name: "description", type: "text", multiline: true },
+
+            { name: "cover", type: "avatar" },
+            {
+              name: "contactChannel",
+              type: "radio",
+              label: "Select the best channel for readers to contact you:",
+              choices: [
+                { label: "email", value: "email" },
+                { label: "telefone", value: "telefone" }
+              ]
+            },
+            { name: "year", type: "date", label: "DATA" },
+
+            {
+              name: "termsAgreement",
+              type: "checkbox",
+              topLabel: "Do you agree with our terms?",
+              label: "I do!"
+            }
           ]}
         >
           <BookInfo {...book} />
@@ -76,35 +87,6 @@ const Example = () => {
 import { Stoopy, BookInfo } from '@seasonedsoftware/stoopy'
 
 // MyComponent
-const [book, setBook] = useState(emptyBook);
-<Stoopy
-  onNext={setBook}
-  target={book}
-  fields={[
-    {
-      name: "onSale",
-      type: "radio",
-      props: {
-        choices: [
-          // Values only be string
-          { label: "on", value: "true" },
-          { label: "off", value: "false" }
-        ]
-      }
-    },
-    {
-      name: "genre",
-      type: "select",
-      props: { choices: ["sci-fi", "drama", "fantasy"] }
-    },
-    "name",
-
-    { name: "year", type: "number" },
-    { name: "cover", type: "avatar" }
-  ]}
->
-  <BookInfo {...book} />
-</Stoopy>
 
         `}
       </SyntaxHighlighter>

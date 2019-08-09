@@ -1,65 +1,149 @@
 import React from "react";
 import get from "lodash/get";
-import { SelectInput, RadioInput, DropAvatar, Input } from "./default/Inputs";
+import {
+  SelectInput,
+  CheckboxInput,
+  RadioInput,
+  DropAvatar,
+  DateInput,
+  YearInput,
+  MonthYearInput,
+  TimeInput,
+  Input
+} from "./default/Inputs";
+import reduce from "lodash/reduce";
 
-// Get correct component and field type from field.type provided
-export const parseType = (field, fields) => {
+// Get correct component and field type from type provided
+export const parseType = (type, fields) => {
   const list = {
     select: {
       Component: SelectInput,
-      type: fields.select,
-      customConfig: {
-        onChange: form => form.target.value
+      field: fields.select,
+      baseOpts: {
+        onChange: e => e.target.value
       }
     },
-    // checkbox: { Component: CheckboxComponent, type: fields.checkbox },
+    checkbox: {
+      Component: CheckboxInput,
+      field: fields.checkbox,
+      baseOpts: {
+        onChange: e => e.target.value
+      }
+    },
     radio: {
       Component: RadioInput,
-      type: fields.radio,
-      customConfig: {
-        onChange: form => form.target.value
+      field: fields.radio,
+      baseOpts: {
+        onChange: e => e.target.value
       }
     },
-    // datetime: {Component: DateTimeComponent, type: 'checkbox'} ,
+    // TODO: Finish/improve DateTime related fields
+    date: {
+      Component: DateInput,
+      field: fields.raw,
+      baseOpts: {
+        // NOTE: Erase time?
+        onChange: dateTime => dateTime.toUTC().toString()
+      }
+    },
+    year: {
+      Component: YearInput,
+      field: fields.raw,
+      baseOpts: {
+        onChange: dateTime => {
+          return dateTime.c.year;
+        }
+      }
+    },
+    yearMonth: {
+      Component: MonthYearInput,
+      field: fields.raw,
+      baseOpts: {
+        // NOTE: Erase time?
+        onChange: dateTime => dateTime.toUTC().toString()
+      }
+    },
+    // time: {
+    //   Component: TimeInput,
+    //   field: fields.raw,
+    //   baseOpts: {
+    //     onChange: dateTime => dateTime.toUTC().toString()
+    //   }
+    // },
     avatar: {
       Component: DropAvatar,
-      type: fields.raw,
-      customConfig: {
+      field: fields.raw,
+      baseOpts: {
         onChange: file => file.url
       }
     }
-    // images: { Component: ImagesComponent, type: 'raw' },
-    // files: { Component: FilesComponent, type: 'raw' },
+    // images: { Component: ImagesComponent, field: 'raw' },
+    // files: { Component: FilesComponent, field: 'raw' },
   };
 
-  const fallback = {
+  return get(list, type, {
     Component: Input,
-    type: get(fields, field.type, fields.text)
-  };
-
-  const { Component, type, customConfig } = get(list, field.type, fallback);
-  return { Component: field.Component || Component, type, customConfig };
+    field: get(fields, type, fields.text)
+  });
 };
 
-export default ({ field, fields, formState }) => {
-  if (!field) {
-    return <p>Acabaram os forms</p>;
+export default ({
+  field: {
+    name,
+    type,
+    onChange,
+    onBlur,
+    validate,
+    validadeOnBlur,
+    touchOnChange,
+    Component,
+    ...props
+  },
+  fields,
+  formState
+}) => {
+  if (!name) {
+    return <p>That's It!</p>;
   }
-  const { Component, type, customConfig } = parseType(field, fields);
-  console.log("formsTAte", formState);
+
+  const { Component: DefaultComponent, field, baseOpts } = parseType(
+    type,
+    fields
+  );
+
+  const FieldComponent = Component || DefaultComponent;
+  const filteredOutput = obj =>
+    reduce(
+      obj,
+      (result, value, key) => {
+        const obj = {};
+        obj[key] = value;
+        return value && value !== "" ? { ...result, ...obj } : result;
+      },
+      {}
+    );
+
+  console.log("aa", formState);
+
   return (
-    <Component
-      {...type({
-        name: field.name,
-        ...customConfig
+    <FieldComponent
+      {...field({
+        ...baseOpts,
+        ...filteredOutput({
+          name,
+          onChange,
+          onBlur,
+          validate,
+          validadeOnBlur,
+          touchOnChange
+        })
       })}
-      {...field.props}
-      label={field.label}
-      value={formState.values.onSale}
-      formState={formState}
+      {...props}
+      value={get(formState.values, name, null)}
       setValue={value => {
-        formState.setField(field.name, value);
+        formState.setField(name, value);
       }}
+      formState={formState}
     />
   );
 };

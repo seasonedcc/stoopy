@@ -87,7 +87,7 @@ const Component = ({
   );
 };
 
-// This is a workaround to a weird bug being investigated
+// This is a workaround to a weird bug being investigated. Perhaps use React.memo?
 export const Stoopy = props => {
   const Wrapper =
     (props.components && props.components.Wrapper) || defaultLayout.Wrapper;

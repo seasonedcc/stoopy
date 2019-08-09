@@ -3,6 +3,7 @@ import {
   CircularProgress,
   FormControl,
   FormControlLabel,
+  FormGroup,
   RadioGroup,
   FormLabel,
   Radio,
@@ -12,33 +13,71 @@ import {
   Checkbox,
   InputLabel
 } from "@material-ui/core";
+import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import { DropPicture } from "uploods";
 import startCase from "lodash/startCase";
+import LuxonUtils from "@date-io/luxon";
+import { DateTime } from "luxon";
 
-const DateTimeInput = props => {
+export const YearInput = props => {
+  return <DateInput views={["year"]} {...props} />;
+};
+export const MonthYearInput = props => {
+  return <DateInput views={["month", "year"]} {...props} />;
+};
+
+export const TimeInput = props => {
   return null;
 };
 
-const CheckboxInput = props => {
+export const DateInput = ({
+  label,
+  value,
+  setValue,
+  onChange,
+  type,
+  views,
+  ...props
+}) => {
+  const normalizedValue =
+    value === "" ? DateTime.local() : DateTime.fromISO(value);
+  return (
+    <MuiPickersUtilsProvider utils={LuxonUtils}>
+      <DatePicker
+        views={views}
+        label={label}
+        autoOk
+        onChange={onChange}
+        value={normalizedValue}
+      />
+    </MuiPickersUtilsProvider>
+  );
+};
+
+export const CheckboxInput = ({
+  label,
+  choices,
+  value,
+  onChange,
+  topLabel,
+  ...props
+}) => {
   return (
     <FormControl component="fieldset">
-      <FormLabel component="legend">Gender</FormLabel>
-      <RadioGroup name="" value={null} handleChange={null}>
-        <FormControlLabel value="female" control={<Radio />} label="Female" />
-        <FormControlLabel value="male" control={<Radio />} label="Male" />
-        <FormControlLabel value="other" control={<Radio />} label="Other" />
+      {topLabel && <FormLabel component="legend">{topLabel}</FormLabel>}
+      <FormGroup {...props}>
         <FormControlLabel
-          value="disabled"
-          disabled
-          control={<Radio />}
-          label="(Disabled option)"
+          control={
+            <Checkbox checked={value} onChange={onChange} value="true" />
+          }
+          label={label}
         />
-      </RadioGroup>
+      </FormGroup>
     </FormControl>
   );
 };
 
-// What to do about booleans?
+// What to do about booleans in values transformed to string?
 export const RadioInput = ({ label, choices, ...props }) => {
   return (
     <FormControl component="fieldset">
@@ -52,13 +91,20 @@ export const RadioInput = ({ label, choices, ...props }) => {
                   label: choice,
                   value: choice
                 };
-          return <FormControlLabel control={<Radio />} {...opts} />;
+          return (
+            <FormControlLabel
+              key={choice.label}
+              control={<Radio />}
+              {...opts}
+            />
+          );
         })}
       </RadioGroup>
     </FormControl>
   );
 };
 export const SelectInput = ({ label, value, choices, ...props }) => {
+  console.log("value", value);
   return (
     <FormControl style={{ minWidth: 120 }}>
       <InputLabel>{label}</InputLabel>
@@ -67,7 +113,9 @@ export const SelectInput = ({ label, value, choices, ...props }) => {
         value={value}
       >
         {choices.map(choice => (
-          <MenuItem value={choice}>{choice}</MenuItem>
+          <MenuItem key={choice} value={choice}>
+            {choice}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>
@@ -88,7 +136,6 @@ export const DropAvatar = props => {
 };
 
 export const Input = ({
-  children,
   disabled,
   name,
   error,
@@ -97,6 +144,7 @@ export const Input = ({
   placeholder = label,
   ...props
 }) => {
+  console.log("props", props);
   const helperText = error || helper;
   return (
     <TextField
