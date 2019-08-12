@@ -9,6 +9,9 @@ import startCase from "lodash/startCase";
 import filter from "lodash/filter";
 import CurrentField from "./CurrentField";
 import * as defaultLayout from "./default/Layout";
+import { CSSTransition } from 'react-transition-group';
+
+import './Stoopy.css'
 
 const Component = ({
   fields: propFields,
@@ -65,21 +68,39 @@ const Component = ({
   const NextButton = components.NextButton || defaultLayout.NextButton;
   const Loading = components.Loading || defaultLayout.Loading;
 
+  const [transition, setTransition] = useState(true)
+
   return saving ? (
     <Loading />
   ) : (
     <>
       {field && (
         <form
+          key="form"
           onSubmit={e => {
             e.preventDefault();
             // setLoading(true)
-            onNext(filteredOutput);
+            // onNext(filteredOutput);
           }}
         >
           <FormHeader />
-          <CurrentField field={field} fields={fields} formState={formState} />
-          <NextButton onClick={() => onNext(filteredOutput)} />
+
+          <CSSTransition
+            in={transition}
+            timeout={200}
+            classNames="my-node"
+            unmountOnExit
+            onExited={() => setTransition(true)}
+        >
+          
+          <CurrentField key={field} field={field} fields={fields} formState={formState} />
+          </CSSTransition> 
+          <NextButton onClick={async () => {
+            await setTransition(false)
+            setTimeout(() => {
+              onNext(filteredOutput)
+            }, 200)
+          }} />
         </form>
       )}
       {!field && children}
