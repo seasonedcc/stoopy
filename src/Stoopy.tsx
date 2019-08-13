@@ -77,10 +77,12 @@ const Component = ({
       {field && (
         <form
           key="form"
-          onSubmit={e => {
+          onSubmit={async (e) => {
             e.preventDefault();
-            // setLoading(true)
-            // onNext(filteredOutput);
+            await setTransition(false)
+            setTimeout(() => {
+              onNext(filteredOutput)
+            }, 200)
           }}
         >
           <FormHeader />
@@ -95,12 +97,7 @@ const Component = ({
           
           <CurrentField key={field} field={field} fields={fields} formState={formState} />
           </CSSTransition> 
-          <NextButton onClick={async () => {
-            await setTransition(false)
-            setTimeout(() => {
-              onNext(filteredOutput)
-            }, 200)
-          }} />
+          <NextButton />
         </form>
       )}
       {!field && children}
