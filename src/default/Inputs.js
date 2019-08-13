@@ -104,7 +104,6 @@ export const RadioInput = ({ label, choices, ...props }) => {
   );
 };
 export const SelectInput = ({ label, value, choices, ...props }) => {
-  console.log("value", value);
   return (
     <FormControl style={{ minWidth: 120 }}>
       <InputLabel>{label}</InputLabel>
@@ -144,7 +143,6 @@ export const Input = ({
   placeholder = label,
   ...props
 }) => {
-  console.log("props", props);
   const helperText = error || helper;
   return (
     <TextField

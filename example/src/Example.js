@@ -37,7 +37,6 @@ const Example = () => {
     genre: undefined
   };
   const [book, setBook] = useState(emptyBook);
-  console.log("Book", book);
   return (
     <Card elevation={5} className="rating">
       <CardHeader title="Stoopy" />
