@@ -33,6 +33,8 @@ const Example = () => {
     cover: undefined,
     termsAgreement: undefined,
     contactChannel: undefined,
+    foo: "defined",
+    bar: "alsodefined",
     description: undefined,
     genre: undefined
   };
@@ -43,7 +45,13 @@ const Example = () => {
       <CardHeader title="Stoopy" />
       <CardContent>
         <Stoopy
-          onNext={setBook}
+          onNext={values => {
+            console.log("===== values ===== \n");
+            console.log("values", values);
+            console.log("===== values ===== \n");
+
+            setBook({ ...book, ...values });
+          }}
           target={book}
           fields={[
             {
@@ -52,7 +60,8 @@ const Example = () => {
               choices: ["sci-fi", "drama", "fantasy"]
             },
             "name",
-
+            "foo",
+            "bar",
             { name: "description", type: "text", multiline: true },
 
             { name: "cover", type: "avatar" },
@@ -66,7 +75,6 @@ const Example = () => {
               ]
             },
             { name: "year", type: "date", label: "DATA" },
-
             {
               name: "termsAgreement",
               type: "checkbox",
