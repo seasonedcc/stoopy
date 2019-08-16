@@ -1,0 +1,22 @@
+
+.my-node-enter {
+    left: 200px;
+    opacity: 0.5;
+}
+
+.my-node-enter-active {
+    opacity: 1;
+    left: 0px;
+    transition: all 200ms;
+}
+
+.my-node-exit {
+    opacity: 1;
+}
+
+.my-node-exit-active {
+    opacity: 0;
+    left: -200px;
+    transition: all 200ms;
+
+}

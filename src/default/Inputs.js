@@ -88,6 +88,7 @@ export const RadioInput = ({ label, choices, ...props }) => {
             typeof choice === 'object'
               ? choice
               : {
+
                   label: choice,
                   value: choice,
                 }

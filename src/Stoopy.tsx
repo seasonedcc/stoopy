@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 import { useFormState } from 'react-use-form-state'
 import get from 'lodash/get'
 import map from 'lodash/map'
-import reduce from 'lodash/reduce'
 import head from 'lodash/head'
 import size from 'lodash/size'
 import find from 'lodash/find'
@@ -12,6 +11,9 @@ import startCase from 'lodash/startCase'
 import filter from 'lodash/filter'
 import CurrentField from './CurrentField'
 import * as defaultLayout from './default/Layout'
+import { CSSTransition } from 'react-transition-group';
+
+import './Stoopy.css'
 
 export default ({
   fields: propFields,
@@ -85,28 +87,47 @@ export default ({
     components.ProgressTracker || defaultLayout.ProgressTracker
   const Loading = components.Loading || defaultLayout.Loading
 
+  const [transition, setTransition] = useState(true)
+
   return saving ? (
     <Loading />
   ) : (
     <>
       {field && (
         <form
+           key="form"
           onSubmit={e => {
             e.preventDefault()
-            // NOTE: Ugly code
-            const value = {}
-            value[field.name] = get(formState.values, field.name)
-            setValues({ ...values, ...value })
-            onNext &&
+            await setTransition(false)
+
+
+            setTimeout(() => {
+                 // NOTE: Ugly code
+            
+              const value = {}
+              value[field.name] = get(formState.values, field.name)
+              setValues({ ...values, ...value })
+              onNext &&
               onNext({
                 value: { ...value },
                 values: { ...values, ...value },
                 progress,
-              })
+              })            }, 200)
+            
+
           }}
         >
           <FormHeader progress={progress} title={title} />
+           <CSSTransition
+            in={transition}
+            timeout={200}
+            classNames="my-node"
+            unmountOnExit
+            onExited={() => setTransition(true)}
+        >
           <CurrentField field={field} fields={fields} formState={formState} />
+                       </CSSTransition> 
+
           <div
             style={{
               display: 'flex',
