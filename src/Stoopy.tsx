@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import { useFormState } from 'react-use-form-state'
-import get from 'lodash/get'
-import map from 'lodash/map'
-import head from 'lodash/head'
-import size from 'lodash/size'
-import find from 'lodash/find'
-import omit from 'lodash/omit'
-import startCase from 'lodash/startCase'
-import filter from 'lodash/filter'
-import CurrentField from './CurrentField'
-import * as defaultLayout from './default/Layout'
-import { CSSTransition } from 'react-transition-group';
+import { useFormState } from "react-use-form-state";
+import get from "lodash/get";
+import map from "lodash/map";
+import head from "lodash/head";
+import size from "lodash/size";
+import find from "lodash/find";
+import omit from "lodash/omit";
+import startCase from "lodash/startCase";
+import filter from "lodash/filter";
+import CurrentField from "./CurrentField";
+import * as defaultLayout from "./default/Layout";
+import { CSSTransition } from "react-transition-group";
 
-import './Stoopy.css'
+import "./Stoopy.css";
 
-export default ({
+export const Stoopy = ({
   fields: propFields,
   target,
   onNext,
@@ -24,117 +24,151 @@ export default ({
   saving,
   progress: progressHandler,
   title,
-  components = {},
-  ...props
+  layout = {}
 }) => {
-  const [values, setValues] = useState({})
-  const [formState, fields] = useFormState()
+  const [transition, setTransition] = useState(true);
+  const [values, setValues] = useState({});
+  const [formState, fields] = useFormState();
 
   // Normalize shortened versions into field objects
-  const normalizeFields = fields =>
-    map(fields, (field, index) => {
-      if (typeof field === 'string') {
-        return {
-          name: field,
-          stepKey: index + 1,
-          type: 'text',
-          label: startCase(field),
-        }
-      }
+  const normalizedFields = map(propFields, (field, index) => {
+    if (typeof field === "string") {
       return {
-        type: 'text',
+        name: field,
         stepKey: index + 1,
-        label: startCase(field.name),
-        ...field,
-      }
-    })
+        type: "text",
+        label: startCase(field)
+      };
+    }
+    return {
+      type: "text",
+      stepKey: index + 1,
+      label: startCase(field.name),
+      ...field
+    };
+  });
 
   // Filter fields, removing those already on target/state
   const filteredFields = filter(
-    normalizeFields(propFields),
-    field => !get(values, field.name),
-  )
+    normalizedFields,
+    field => !get(values, field.name)
+  );
 
   // Set current field
-  const field = head(filteredFields)
+  const field = head(filteredFields);
 
   // Progress
   const progress = {
     currentStep: field && field.stepKey,
-    totalSteps: size(normalizeFields(propFields)),
-  }
-
-  if (progressHandler) {
-    progressHandler(progress)
-  }
+    totalSteps: size(normalizedFields)
+  };
 
   // Back functionalities
   const goBack = ({ stepKey }) => () => {
-    const last = find(normalizeFields(propFields), ['stepKey', stepKey - 1])
-    setValues(omit(values, last.name))
-  }
-
-  // Run function after last field is completed
-  if (!field) {
-    onEnd && onEnd(values)
-  }
+    const last = find(normalizedFields, ["stepKey", stepKey - 1]);
+    setValues(omit(values, last.name));
+  };
 
   // NOTE: Repetitive code, clean up.
-  const FormHeader = components.FormHeader || defaultLayout.FormHeader
-  const NextButton = components.NextButton || defaultLayout.NextButton
-  const BackButton = components.BackButton || defaultLayout.BackButton
+  const FormHeader = layout.FormHeader || defaultLayout.FormHeader;
+  const NextButton = layout.NextButton || defaultLayout.NextButton;
+  const BackButton = layout.BackButton || defaultLayout.BackButton;
   const ProgressTracker =
-    components.ProgressTracker || defaultLayout.ProgressTracker
-  const Loading = components.Loading || defaultLayout.Loading
+    layout.ProgressTracker || defaultLayout.ProgressTracker;
+  const Loading = layout.Loading || defaultLayout.Loading;
 
-  const [transition, setTransition] = useState(true)
+  useEffect(
+    () => {
+      if (progressHandler) {
+        progressHandler(progress);
+        console.log("chamou");
+      }
+    },
+    [field && field.stepKey]
+  );
 
+  const LayoutComponent = ({
+    CurrentField,
+    backProps,
+    nextProps,
+    progress
+  }) => {
+    const {
+      FormHeader,
+      BackButton,
+      NextButton,
+      ProgressTracker
+    } = defaultLayout;
+    return (
+      <>
+        <FormHeader title="Add your book in a few steps!" />
+        <CurrentField />
+        <div
+          style={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: 20
+          }}
+        >
+          <BackButton {...backProps} />
+          <ProgressTracker progress={progress} />
+          <NextButton />
+        </div>
+      </>
+    );
+  };
+
+  // se layout é uma funcao, eu passo tudo pra ele. Tudo o que?
+  // CurrentField, progress, nextProps and backProps,
+
+  // NOTE: Prettier render conditionals possible?
   return saving ? (
     <Loading />
   ) : (
     <>
       {field && (
         <form
-           key="form"
-          onSubmit={e => {
-            e.preventDefault()
-            await setTransition(false)
-
-
-            setTimeout(() => {
-                 // NOTE: Ugly code
-            
-              const value = {}
-              value[field.name] = get(formState.values, field.name)
-              setValues({ ...values, ...value })
+          key="form"
+          onSubmit={async e => {
+            e.preventDefault();
+            await setTransition(false);
+            setTimeout(async () => {
+              const value = {};
+              value[field.name] = get(formState.values, field.name);
+              setValues({ ...values, ...value });
               onNext &&
-              onNext({
-                value: { ...value },
-                values: { ...values, ...value },
-                progress,
-              })            }, 200)
-            
+                (await onNext({
+                  value: { ...value },
+                  values: { ...values, ...value },
+                  progress
+                }));
 
+              // Call onEnd if is the last field
+              if (field.stepKey === propFields.length)
+                onEnd && (await onEnd({ ...values, ...value }));
+            }, 400);
           }}
         >
           <FormHeader progress={progress} title={title} />
-           <CSSTransition
+          <CSSTransition
             in={transition}
-            timeout={200}
+            timeout={300}
             classNames="my-node"
             unmountOnExit
             onExited={() => setTransition(true)}
-        >
-          <CurrentField field={field} fields={fields} formState={formState} />
-                       </CSSTransition> 
+          >
+            <CurrentField field={field} fields={fields} formState={formState} />
+          </CSSTransition>
 
           <div
             style={{
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 20,
+              display: "flex",
+              width: "100%",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginTop: 20
             }}
           >
             <BackButton onClick={goBack(field)} />
@@ -143,7 +177,7 @@ export default ({
           </div>
         </form>
       )}
-      {!field && children}
+      {(!field && children) || null}
     </>
-  )
-}
+  );
+};
