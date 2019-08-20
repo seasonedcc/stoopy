@@ -25,13 +25,14 @@ Check [the samples](https://seasonedsoftware.github.io/stoopy/).
 
 ### fields
 
-Ex: `
+Ex: 
+```javascript
 [
 "field1", // defaults to text input,
 { name: "field2", label: "Second Field", type: "field" } // field object
 ]
+```
 
-`
 
 The most important prop, as here is where you set all the fields for you form.
 It must be an `Array`, as the order of the inputs is the order in which fields steps will be shown.
