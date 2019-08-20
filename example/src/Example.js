@@ -41,7 +41,7 @@ const Example = () => {
           onEnd={values => {
             setLogEnd(values);
           }}
-          progress={progress => setLogProgress(progress)}
+          progressHandler={progress => setLogProgress(progress)}
           fields={[
             "name",
             { name: "description", type: "text", multiline: true },

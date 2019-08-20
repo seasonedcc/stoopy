@@ -22,7 +22,7 @@ export const Stoopy = ({
   onEnd,
   children,
   saving,
-  progress: progressHandler,
+  progressHandler,
   title,
   layout = {}
 }) => {
