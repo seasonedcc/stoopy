@@ -66,7 +66,12 @@ export const Stoopy = ({
   // Back functionalities
   const goBack = ({ stepKey }) => () => {
     const last = find(normalizedFields, ["stepKey", stepKey - 1]);
-    setValues(omit(values, last.name));
+
+    firstRender.current = true;
+    setVisible(!visible);
+    setTimeout(async () => {
+      await setValues(omit(values, last.name));
+    }, 900);
   };
 
   // NOTE: Repetitive code, clean up.
