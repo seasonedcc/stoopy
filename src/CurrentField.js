@@ -101,6 +101,7 @@ export default ({
     validadeOnBlur,
     touchOnChange,
     Component,
+    stepKey,
     ...props
   },
   fields,
@@ -145,11 +146,10 @@ export default ({
                 })
               })}
               {...props}
-              value={get(formState.values, name, null)}
+              value={get(formState.values, name, "")}
               setValue={value => {
                 formState.setField(name, value);
               }}
-              formState={formState}
             />
           </Animated>
         )}
