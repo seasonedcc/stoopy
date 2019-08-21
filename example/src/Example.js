@@ -11,10 +11,10 @@ const BookInfo = props => {
   return (
     <div>
       <h1>
-        <b>{props.name}</b>
+        <b>{props.bookName}</b>
       </h1>
       <img src={props.cover} />
-      <p>A book about "{props.description}"</p>
+      <p>Cover type: {props.coverType}</p>
       <p>
         <b>Genre:</b>
         {props.genre}
@@ -34,72 +34,79 @@ const Example = () => {
       <CardHeader title="Stoopy" />
       <CardContent>
         <Stoopy
-          title="Add your book in a few steps!"
+          fields={[
+            "bookName",
+            {
+              name: "genre",
+              type: "select",
+              choices: ["sci-fi", "drama", "fantasy"]
+            },
+            {
+              name: "coverType",
+              type: "radio",
+              choices: ["hardCover", "paperBack"]
+            },
+            { name: "cover", type: "avatar" }
+          ]}
           onNext={({ value, values }) => {
             setLogNext({ value, values });
           }}
           onEnd={values => {
             setLogEnd(values);
+            setBook(values);
           }}
-          progressHandler={progress => setLogProgress(progress)}
-          fields={[
-            "name",
-            { name: "description", type: "text", multiline: true },
-            {
-              name: "genre",
-              type: "select",
-              choices: ["sci-fi", "drama", "fantasy"]
-            }
-          ]}
+          onProgress={progress => setLogProgress(progress)}
+          title="Publish your book in a few steps!"
         >
           <BookInfo {...book} />
         </Stoopy>
       </CardContent>
       <SyntaxHighlighter language="javascript" style={prism}>
         {`
-// Console logs printed bellow to make it easier:
+// Console logs printed bellow for your convenience:
 ${(logNext &&
-          `
-onNext --> {
+          `onNext --> {
   value: ${JSON.stringify(logNext.value)},
   values: ${JSON.stringify(logNext.values)},
 }`) ||
           ""}
 ${(logEnd &&
-          `
-onEnd -->  ${JSON.stringify(logEnd)},
+          `onEnd -->  ${JSON.stringify(logEnd)},
 `) ||
           ""}
 ${(logProgress &&
-          `
-progress -->  ${JSON.stringify(logProgress)},
+          `onProgress -->  ${JSON.stringify(logProgress)},
 `) ||
           ""}
-
-// End of log space
+// End of logs
 
 import { Stoopy } from '@seasonedsoftware/stoopy'
 
 // MyComponent
 const [book, setBook] = useState({});
 <Stoopy
-  onNext={({ value, values}) => console.log('onNext -->', value, values)}
-  onEnd={values => setBook(values)}
   fields={[
-    "name",
-    { name: "description", type: "text", multiline: true },
-    { name: "cover", type: "avatar" },
+    "bookName",
     {
       name: "genre",
       type: "select",
       choices: ["sci-fi", "drama", "fantasy"]
     },
+    {
+      name: 'What kind of cover should we print?'
+    }
+    { name: "cover", type: "avatar" },
   ]}
+  onNext={({ value, values}) => console.log('onNext -->', value, values)}
+  onEnd={values => {
+    console.log('onEnd -->', value, values)
+    setBook(values)
+  }}
+  onProgress={progress => console.log('onProgress -->',progress)}
+  title="Publish your book in a few steps!"
 >
   <BookInfo {...book} />
 </Stoopy>
-
-
         `}
       </SyntaxHighlighter>
     </Card>

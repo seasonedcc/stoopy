@@ -19,16 +19,18 @@ export const Stoopy = ({
   onEnd,
   children,
   saving,
-  progressHandler,
+  onProgress,
   title,
   layout = {}
 }) => {
   const [values, setValues] = useState({});
+  const [formState, fields] = useFormState();
+
+  // Refs and state for managing transitions
+  // NOTE: Weird names, but probally the whole aproach will change anyways
   const [visible, setVisible] = useState(true);
   const invert = useRef(true);
   const firstRender = useRef(true);
-
-  const [formState, fields] = useFormState();
 
   // Normalize shortened versions into field objects
   const normalizedFields = map(propFields, (field, index) => {
@@ -82,10 +84,11 @@ export const Stoopy = ({
     layout.ProgressTracker || defaultLayout.ProgressTracker;
   const Loading = layout.Loading || defaultLayout.Loading;
 
+  // Update progress when step changes
   useEffect(
     () => {
-      if (progressHandler) {
-        progressHandler(progress);
+      if (onProgress) {
+        onProgress(progress);
       }
     },
     [field && field.stepKey]
@@ -93,6 +96,7 @@ export const Stoopy = ({
 
   useLayoutEffect(
     () => {
+      // Runs once, when there is a new field
       if (firstRender.current) {
         invert.current = !invert.current;
         firstRender.current = false;
@@ -124,8 +128,12 @@ export const Stoopy = ({
             if (field.stepKey === propFields.length)
               onEnd && (await onEnd({ ...values, ...value }));
 
+            // Hide field with transition
+            //
             firstRender.current = true;
             setVisible(!visible);
+
+            // Wait for the transition before changing state
             setTimeout(async () => {
               await setValues({ ...values, ...value });
             }, 900);
