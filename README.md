@@ -25,13 +25,14 @@ Check [the samples](https://seasonedsoftware.github.io/stoopy/).
 
 ### fields
 
-Ex: ```javascript
+Ex: 
+```javascript
 [
 "field1", // defaults to text input,
 { name: "field2", label: "Second Field", type: "field" } // field object
 ]
+```
 
-````
 
 The most important prop, as here is where you set all the fields for you form.
 It must be an `Array`, as the order of the inputs is the order in which fields steps will be shown.
@@ -116,7 +117,7 @@ Ex: `({ CurrentField, nextProps, BackProps, progress, saving }) => // your layou
 
 This prop works in two diferent ways:
 
-1. If you provide it an object, you can override the default components with your own. Check [here](#layoutobject) the full list.
+1. If you provide it an object, you can override the default components with your own. Check [here](#layout-object) the full list.
 2. If you need, however, more customization, you can provide it with a component (a [render prop](https://reactjs.org/docs/render-props.html)) that
    receives four props:
 
@@ -136,7 +137,7 @@ Bellow you can check which are all the default components you can override withi
 - `Loading`: Component to show when saving is set to `true`.
 - `NextButton`: Component for submitting the current step. Receives a `nextProps` object with props needed (actually, for now just a `type=submit`).
 - `BackButton`: Component for submitting the current step. Receives a `backProps` object with props needed (onClick).
-- `customInputs`: An object where you can override all default inputs. See the full list [bellow](#defaultinputs)
+- `customInputs`: An object where you can override all default inputs. See the full list [bellow](#default-inputs)
 
 #### default inputs
 
