@@ -79,8 +79,10 @@
   ],
   "dependencies": {
     "@date-io/luxon": "^1.3.9",
+    "animate.css": "^3.7.2",
     "firebase": "^6.3.4",
     "luxon": "^1.17.2",
+    "react-animated-transitions": "^0.0.6",
     "react-transition-group": "^4.2.2",
     "react-use-form-state": "^0.11.0",
     "uploods": "^0.5.1"

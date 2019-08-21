@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { useFormState } from "react-use-form-state";
 import get from "lodash/get";
@@ -11,9 +11,6 @@ import startCase from "lodash/startCase";
 import filter from "lodash/filter";
 import CurrentField from "./CurrentField";
 import * as defaultLayout from "./default/Layout";
-import { CSSTransition } from "react-transition-group";
-
-import "./Stoopy.css";
 
 export const Stoopy = ({
   fields: propFields,
@@ -26,8 +23,11 @@ export const Stoopy = ({
   title,
   layout = {}
 }) => {
-  const [transition, setTransition] = useState(true);
   const [values, setValues] = useState({});
+  const [visible, setVisible] = useState(true);
+  const invert = useRef(true);
+  const firstRender = useRef(true);
+
   const [formState, fields] = useFormState();
 
   // Normalize shortened versions into field objects
@@ -81,47 +81,20 @@ export const Stoopy = ({
     () => {
       if (progressHandler) {
         progressHandler(progress);
-        console.log("chamou");
       }
     },
     [field && field.stepKey]
   );
 
-  const LayoutComponent = ({
-    CurrentField,
-    backProps,
-    nextProps,
-    progress
-  }) => {
-    const {
-      FormHeader,
-      BackButton,
-      NextButton,
-      ProgressTracker
-    } = defaultLayout;
-    return (
-      <>
-        <FormHeader title="Add your book in a few steps!" />
-        <CurrentField />
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 20
-          }}
-        >
-          <BackButton {...backProps} />
-          <ProgressTracker progress={progress} />
-          <NextButton />
-        </div>
-      </>
-    );
-  };
-
-  // se layout é uma funcao, eu passo tudo pra ele. Tudo o que?
-  // CurrentField, progress, nextProps and backProps,
+  useLayoutEffect(
+    () => {
+      if (firstRender.current) {
+        invert.current = !invert.current;
+        firstRender.current = false;
+      }
+    },
+    [field && field.name]
+  );
 
   // NOTE: Prettier render conditionals possible?
   return saving ? (
@@ -133,35 +106,33 @@ export const Stoopy = ({
           key="form"
           onSubmit={async e => {
             e.preventDefault();
-            await setTransition(false);
-            setTimeout(async () => {
-              const value = {};
-              value[field.name] = get(formState.values, field.name);
-              setValues({ ...values, ...value });
-              onNext &&
-                (await onNext({
-                  value: { ...value },
-                  values: { ...values, ...value },
-                  progress
-                }));
+            const value = {};
+            value[field.name] = get(formState.values, field.name);
+            onNext &&
+              (await onNext({
+                value: { ...value },
+                values: { ...values, ...value },
+                progress
+              }));
 
-              // Call onEnd if is the last field
-              if (field.stepKey === propFields.length)
-                onEnd && (await onEnd({ ...values, ...value }));
-            }, 400);
+            // Call onEnd if is the last field
+            if (field.stepKey === propFields.length)
+              onEnd && (await onEnd({ ...values, ...value }));
+
+            firstRender.current = true;
+            setVisible(!visible);
+            setTimeout(async () => {
+              await setValues({ ...values, ...value });
+            }, 900);
           }}
         >
           <FormHeader progress={progress} title={title} />
-          <CSSTransition
-            in={transition}
-            timeout={300}
-            classNames="my-node"
-            unmountOnExit
-            onExited={() => setTransition(true)}
-          >
-            <CurrentField field={field} fields={fields} formState={formState} />
-          </CSSTransition>
-
+          <CurrentField
+            field={field}
+            fields={fields}
+            formState={formState}
+            show={invert.current ? !visible : visible}
+          />
           <div
             style={{
               display: "flex",
@@ -181,3 +152,39 @@ export const Stoopy = ({
     </>
   );
 };
+
+//
+// RENDER PROP IMPLEMENTATION
+//
+// const LayoutComponent = ({
+//   CurrentField,
+//   backProps,
+//   nextProps,
+//   progress
+// }) => {
+//   const {
+//     FormHeader,
+//     BackButton,
+//     NextButton,
+//     ProgressTracker
+//   } = defaultLayout;
+//   return (
+//     <>
+//       <FormHeader title="Add your book in a few steps!" />
+//       <CurrentField />
+//       <div
+//         style={{
+//           display: "flex",
+//           width: "100%",
+//           justifyContent: "space-between",
+//           alignItems: "center",
+//           marginTop: 20
+//         }}
+//       >
+//         <BackButton {...backProps} />
+//         <ProgressTracker progress={progress} />
+//         <NextButton />
+//       </div>
+//     </>
+//   );
+// };

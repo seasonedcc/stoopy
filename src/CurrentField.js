@@ -1,6 +1,6 @@
-import React from 'react'
-import get from 'lodash/get'
-import reduce from 'lodash/reduce'
+import React from "react";
+import get from "lodash/get";
+import reduce from "lodash/reduce";
 import {
   SelectInput,
   CheckboxInput,
@@ -10,8 +10,12 @@ import {
   YearInput,
   MonthYearInput,
   TimeInput,
-  Input,
-} from './default/Inputs'
+  Input
+} from "./default/Inputs";
+
+import Animated from "react-animated-transitions";
+
+import "animate.css";
 
 // Get correct component and field type from type provided
 export const parseType = (type, fields) => {
@@ -20,22 +24,22 @@ export const parseType = (type, fields) => {
       Component: SelectInput,
       field: fields.select,
       baseOpts: {
-        onChange: e => e.target.value,
-      },
+        onChange: e => e.target.value
+      }
     },
     checkbox: {
       Component: CheckboxInput,
       field: fields.checkbox,
       baseOpts: {
-        onChange: e => e.target.value,
-      },
+        onChange: e => e.target.value
+      }
     },
     radio: {
       Component: RadioInput,
       field: fields.radio,
       baseOpts: {
-        onChange: e => e.target.value,
-      },
+        onChange: e => e.target.value
+      }
     },
     // TODO: Finish/improve DateTime related fields
     date: {
@@ -43,25 +47,25 @@ export const parseType = (type, fields) => {
       field: fields.raw,
       baseOpts: {
         // NOTE: Erase time?
-        onChange: dateTime => dateTime.toUTC().toString(),
-      },
+        onChange: dateTime => dateTime.toUTC().toString()
+      }
     },
     year: {
       Component: YearInput,
       field: fields.raw,
       baseOpts: {
         onChange: dateTime => {
-          return dateTime.c.year
-        },
-      },
+          return dateTime.c.year;
+        }
+      }
     },
     yearMonth: {
       Component: MonthYearInput,
       field: fields.raw,
       baseOpts: {
         // NOTE: Erase time?
-        onChange: dateTime => dateTime.toUTC().toString(),
-      },
+        onChange: dateTime => dateTime.toUTC().toString()
+      }
     },
     // time: {
     //   Component: TimeInput,
@@ -74,18 +78,18 @@ export const parseType = (type, fields) => {
       Component: DropAvatar,
       field: fields.raw,
       baseOpts: {
-        onChange: file => file.url,
-      },
-    },
+        onChange: file => file.url
+      }
+    }
     // images: { Component: ImagesComponent, field: 'raw' },
     // files: { Component: FilesComponent, field: 'raw' },
-  }
+  };
 
   return get(list, type, {
     Component: Input,
-    field: get(fields, type, fields.text),
-  })
-}
+    field: get(fields, type, fields.text)
+  });
+};
 
 export default ({
   field: {
@@ -101,47 +105,55 @@ export default ({
   },
   fields,
   formState,
+  show
 }) => {
   if (!name) {
-    return <p>That's It!</p>
+    return <p>That's It!</p>;
   }
 
   const { Component: DefaultComponent, field, baseOpts } = parseType(
     type,
-    fields,
-  )
+    fields
+  );
 
-  const FieldComponent = Component || DefaultComponent
+  const FieldComponent = Component || DefaultComponent;
   const filteredOutput = obj =>
     reduce(
       obj,
       (result, value, key) => {
-        const obj = {}
-        obj[key] = value
-        return value && value !== '' ? { ...result, ...obj } : result
+        const obj = {};
+        obj[key] = value;
+        return value && value !== "" ? { ...result, ...obj } : result;
       },
-      {},
-    )
-
+      {}
+    );
   return (
-    <FieldComponent
-      {...field({
-        ...baseOpts,
-        ...filteredOutput({
-          name,
-          onChange,
-          onBlur,
-          validate,
-          validadeOnBlur,
-          touchOnChange,
-        }),
-      })}
-      {...props}
-      value={get(formState.values, name, null)}
-      setValue={value => {
-        formState.setField(name, value)
-      }}
-      formState={formState}
-    />
-  )
-}
+    <Animated>
+      <Animated items>
+        {show && (
+          <Animated item enter="fadeInLeft" exit="fadeOutRight">
+            <FieldComponent
+              {...field({
+                ...baseOpts,
+                ...filteredOutput({
+                  name,
+                  onChange,
+                  onBlur,
+                  validate,
+                  validadeOnBlur,
+                  touchOnChange
+                })
+              })}
+              {...props}
+              value={get(formState.values, name, null)}
+              setValue={value => {
+                formState.setField(name, value);
+              }}
+              formState={formState}
+            />
+          </Animated>
+        )}
+      </Animated>
+    </Animated>
+  );
+};
