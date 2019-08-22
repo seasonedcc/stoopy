@@ -5,6 +5,7 @@ import get from "lodash/get";
 import map from "lodash/map";
 import head from "lodash/head";
 import size from "lodash/size";
+import reduce from "lodash/reduce";
 import find from "lodash/find";
 import omit from "lodash/omit";
 import startCase from "lodash/startCase";
@@ -14,7 +15,7 @@ import * as defaultLayout from "./default/Layout";
 
 export const Stoopy = ({
   fields: propFields,
-  target,
+  initialState,
   onNext,
   onEnd,
   children,
@@ -31,6 +32,9 @@ export const Stoopy = ({
   const [visible, setVisible] = useState(true);
   const invert = useRef(true);
   const firstRender = useRef(true);
+
+  //  Key of first step (to disable back button)
+  const firstStepKey = useRef(1);
 
   // Normalize shortened versions into field objects
   const normalizedFields = map(propFields, (field, index) => {
@@ -50,7 +54,24 @@ export const Stoopy = ({
     };
   });
 
-  // Filter fields, removing those already on target/state
+  // Include initialState values in initial state
+  if (initialState && Object.keys(values).length === 0) {
+    const initialValues = reduce(
+      initialState,
+      (result, value, key) => {
+        if (find(normalizedFields, ["name", key]) && value) {
+          result[key] = value;
+        }
+        return result;
+      },
+      {}
+    );
+    // Update key after acounting for skipped ones
+    firstStepKey.current = 1 + Object.keys(initialState).length;
+    setValues(initialValues);
+  }
+
+  // Filter fields, removing those already on state
   const filteredFields = filter(
     normalizedFields,
     field => !get(values, field.name)
@@ -59,20 +80,46 @@ export const Stoopy = ({
   // Set current field
   const field = head(filteredFields);
 
-  // Progress
+  // Progress tracking
   const progress = {
     currentStep: field && field.stepKey,
     totalSteps: size(normalizedFields)
   };
 
-  // Back functionalities
-  const goBack = ({ stepKey }) => () => {
+  // Action after each step back
+  const onStepBack = ({ stepKey }) => () => {
     const last = find(normalizedFields, ["stepKey", stepKey - 1]);
 
     firstRender.current = true;
     setVisible(!visible);
     setTimeout(async () => {
       await setValues(omit(values, last.name));
+    }, 900);
+  };
+
+  // Action after each step foward
+  const onStepFoward = async e => {
+    e.preventDefault();
+    const value = {};
+    value[field.name] = get(formState.values, field.name);
+    onNext &&
+      (await onNext({
+        value: { ...value },
+        values: { ...values, ...value },
+        progress
+      }));
+
+    // Call onEnd if its the last step
+    if (field.stepKey === propFields.length)
+      onEnd && (await onEnd({ ...values, ...value }));
+
+    // Hide field with transition
+    firstRender.current = true;
+    setVisible(!visible);
+
+    // Wait for the transition before changing state
+    setTimeout(async () => {
+      await setValues({ ...values, ...value });
     }, 900);
   };
 
@@ -84,7 +131,7 @@ export const Stoopy = ({
     layout.ProgressTracker || defaultLayout.ProgressTracker;
   const Loading = layout.Loading || defaultLayout.Loading;
 
-  // Update progress when step changes
+  // Updates progress when step changes
   useEffect(
     () => {
       if (onProgress) {
@@ -111,34 +158,7 @@ export const Stoopy = ({
   ) : (
     <>
       {field && (
-        <form
-          key="form"
-          onSubmit={async e => {
-            e.preventDefault();
-            const value = {};
-            value[field.name] = get(formState.values, field.name);
-            onNext &&
-              (await onNext({
-                value: { ...value },
-                values: { ...values, ...value },
-                progress
-              }));
-
-            // Call onEnd if is the last field
-            if (field.stepKey === propFields.length)
-              onEnd && (await onEnd({ ...values, ...value }));
-
-            // Hide field with transition
-            //
-            firstRender.current = true;
-            setVisible(!visible);
-
-            // Wait for the transition before changing state
-            setTimeout(async () => {
-              await setValues({ ...values, ...value });
-            }, 900);
-          }}
-        >
+        <form key="form" onSubmit={onStepFoward}>
           <FormHeader progress={progress} title={title} />
           <CurrentField
             field={field}
@@ -155,9 +175,13 @@ export const Stoopy = ({
               marginTop: 20
             }}
           >
-            <BackButton onClick={goBack(field)} />
+            <BackButton
+              onClick={onStepBack(field)}
+              disabled={field.stepKey === firstStepKey.current}
+            />
+            {console.log("backb", field.stepKey, initialState)}
             <ProgressTracker progress={progress} />
-            <NextButton />
+            <NextButton disabled={!get(formState.validity, field.name)} />
           </div>
         </form>
       )}

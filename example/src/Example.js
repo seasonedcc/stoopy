@@ -13,6 +13,9 @@ const BookInfo = props => {
       <h1>
         <b>{props.bookName}</b>
       </h1>
+      <p>
+        by<small> {props.author}</small>
+      </p>
       <img src={props.cover} />
       <p>Cover type: {props.coverType}</p>
       <p>
@@ -24,8 +27,7 @@ const BookInfo = props => {
 };
 
 const Example = () => {
-  const emptyBook = {};
-  const [book, setBook] = useState(emptyBook);
+  const [book, setBook] = useState({ author: "You" });
   const [logNext, setLogNext] = useState(null);
   const [logEnd, setLogEnd] = useState(null);
   const [logProgress, setLogProgress] = useState(null);
@@ -34,7 +36,9 @@ const Example = () => {
       <CardHeader title="Stoopy" />
       <CardContent>
         <Stoopy
+          initialState={book}
           fields={[
+            "author",
             "bookName",
             {
               name: "genre",
@@ -49,6 +53,7 @@ const Example = () => {
             { name: "cover", type: "avatar" }
           ]}
           onNext={({ value, values }) => {
+            setBook({ ...book, value });
             setLogNext({ value, values });
           }}
           onEnd={values => {
@@ -83,9 +88,10 @@ ${(logProgress &&
 import { Stoopy } from '@seasonedsoftware/stoopy'
 
 // MyComponent
-const [book, setBook] = useState({});
+const [book, setBook] = useState({ author: 'You'});
 <Stoopy
   fields={[
+    "author",
     "bookName",
     {
       name: "genre",
@@ -97,6 +103,7 @@ const [book, setBook] = useState({});
     }
     { name: "cover", type: "avatar" },
   ]}
+  initialState={book} // Any field in here will be skiped (but still considered in step counting)
   onNext={({ value, values}) => console.log('onNext -->', value, values)}
   onEnd={values => {
     console.log('onEnd -->', value, values)

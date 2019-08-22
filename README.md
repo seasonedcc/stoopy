@@ -12,33 +12,34 @@ Check [the samples](https://seasonedsoftware.github.io/stoopy/).
 
 ## API
 
-| Property              |    Type     | Required |                 Default                  |
-| --------------------- | :---------: | :------: | :--------------------------------------: |
-| [fields](#fields)     |    Array    |    ✔     |                    -                     |
-| [onNext](#onnext)     |    Func     |          |                    -                     |
-| [onEnd](#onend)       |    Func     |          |                    -                     |
-| [saving](#saving)     |    Bool     |          |                  false                   |
-| [progress](#progress) |    Func     |          |                    -                     |
-| [layout](#layout)     | Object/Func |          |                    -                     |
-| [title](#title)       |   String    |          | "Almost there! Just a few more steps..." |
-| [Children](#text)     |  Component  |          |                    -                     |
+| Property                      |    Type     | Required |                 Default                  |
+| ----------------------------- | :---------: | :------: | :--------------------------------------: |
+| [fields](#fields)             |    Array    |    ✔     |                    -                     |
+| [initialState](#initialstate) |   Object    |          |                    -                     |
+| [onNext](#onnext)             |    Func     |          |                    -                     |
+| [onEnd](#onend)               |    Func     |          |                    -                     |
+| [saving](#saving)             |    Bool     |          |                  false                   |
+| [onProgress](#onProgress)     |    Func     |          |                    -                     |
+| [layout](#layout)             | Object/Func |          |                    -                     |
+| [title](#title)               |   String    |          | "Almost there! Just a few more steps..." |
+| [Children](#text)             |  Component  |          |                    -                     |
 
 ### fields
 
-Ex: 
+Ex:
+
 ```javascript
 [
-"field1", // defaults to text input,
-{ name: "field2", label: "Second Field", type: "field" } // field object
-]
+  "field1", // defaults to text input,
+  { name: "field2", label: "Second Field", type: "field" } // field object
+];
 ```
-
 
 The most important prop, as here is where you set all the fields for you form.
 It must be an `Array`, as the order of the inputs is the order in which fields steps will be shown.
 If the element is a string, it will become a text field, using the string as field
 name and label (Capitalized).
-Most commonly, you will use the field object. It uses [react-use-form-state](https://github.com/wsmd/react-use-form-state) under the hood, so  Bellow are all the available
+Most commonly, you will use the field object. It uses [react-use-form-state](https://github.com/wsmd/react-use-form-state) under the hood, so Bellow are all the available
 options:
 
 #### field object
@@ -66,7 +67,7 @@ touchOnChange: boolean,
 // Any other properties will go directly to the input component.
 other: 'props' // goes to the input component
 }
-````
+```
 
 #### type
 
@@ -81,6 +82,14 @@ Those are all the currently available types, some are custom types, some have ex
 - `year`
 - `yearMonth`
 - `avatar`
+
+### initialState
+
+Ex: `{ field1: 'value'}`
+
+With this prop you can provide a initialState to your form.
+This is useful, for instance, if you want to save each step on your backend and allow your user to continue from where he stopped on a different session.
+Those values will still be considered in step/progress counting.
 
 ### onNext
 
@@ -103,12 +112,12 @@ Ex: `true|false`
 When true, Stoopy will display a loading animation instead of the form. For instance, if your onNext/onEnd functions perform http requests
 to save the data somewhere else, you should set `saving` to true when the request begins, and back to false when its done.
 
-### progressHandler
+### onProgress
 
 Ex: `({ currentStep, totalSteps }) => showProgress(currentStep, totalSteps)`
 
 A function to be called everytime progress changes. You can also directly provide an custom progress tracker to [layout](#layout) (see bellow),
-but if you need to take this info somewhere else, you use `progressHandler` prop.
+but if you need to take this info somewhere else, you use `onProgress` prop.
 
 ### layout
 
@@ -125,14 +134,14 @@ This prop works in two diferent ways:
   inputs. Ex: `<CurrentField customInputs={{ radioInput: CustomRadioInput, ...}}` />
 - `nextProps`: An object containing necessary props for your next button to work properly.
 - `backProps`: An object containing necessary props for your back button to work properly.
-- `progress`: Same progress object received by [progressHandler](#progresshandler), with `currentStep` and `totalSteps`.
+- `progress`: Same progress object received by [onProgress](#onprogress), with `currentStep` and `totalSteps`.
 - `saving`: Loading state provided in [saving](#saving)
 
 Bellow you can check which are all the default components you can override within your `layout object`
 
 #### layout object
 
-- `FormHeader`: Component that stays on top of the form, receives same `progress` object received by [progressHandler](#progresshandler).
+- `FormHeader`: Component that stays on top of the form, receives same `progress` object received by [onProgress](#onprogress).
 - `ProgressTracker`: Self explaining, also receives the same `progress` object.
 - `Loading`: Component to show when saving is set to `true`.
 - `NextButton`: Component for submitting the current step. Receives a `nextProps` object with props needed (actually, for now just a `type=submit`).
