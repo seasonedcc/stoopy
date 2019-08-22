@@ -62,6 +62,7 @@ export default ({
                   touchOnChange
                 })
               })}
+              autoFocus
               {...props}
               value={get(formState.values, name, "")}
               setValue={value => {
