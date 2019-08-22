@@ -35,11 +35,11 @@ Ex:
 ];
 ```
 
-The most important prop, as here is where you set all the fields for you form.
+Here is where you define your form itself.
 It must be an `Array`, as the order of the inputs is the order in which fields steps will be shown.
 If the element is a string, it will become a text field, using the string as field
 name and label (Capitalized).
-Most commonly, you will use the field object. It uses [react-use-form-state](https://github.com/wsmd/react-use-form-state) under the hood, so Bellow are all the available
+Most commonly, you will use the field object. It uses [react-use-form-state](https://github.com/wsmd/react-use-form-state) under the hood, so bellow are all the available
 options:
 
 #### field object
@@ -74,7 +74,7 @@ other: 'props' // goes to the input component
 Those are all the currently available types, some are custom types, some have extra config on top of
 `react-use-form-state` field types. Besides them, you can always use the ones listed [here](https://github.com/wsmd/react-use-form-state#input-types) and provide a custom component to work with them.
 
-- `text`: Actually, you shouldn't pass this one, as when no type is provided, it defaults to `text`.
+- `text`
 - `select`
 - `checkbox`
 - `radio`
@@ -96,7 +96,7 @@ Those values will still be considered in step/progress counting.
 Ex: `({ value, values }) => doSomething(value) // or doSomething(values)`
 
 Function to be called every time a step is submited. It receives an object with two parameters,
-`value` and `values`. `value` is the input value from the current step, while `values`
+`value` and `values`. `value` is the current step's input value, while `values`
 includes the values of all steps so far.
 
 ### onEnd
@@ -104,13 +104,12 @@ includes the values of all steps so far.
 Ex: `values => doSomething(values)`
 
 A function to be called after the last step is submited. It receives an object
-with the values from all steps of the form.
+with the values from all fields of the form.
 
 ### saving
 
 Ex: `true|false`
-When true, Stoopy will display a loading animation instead of the form. For instance, if your onNext/onEnd functions perform http requests
-to save the data somewhere else, you should set `saving` to true when the request begins, and back to false when its done.
+When true, Stoopy will display a loading animation instead of the form. For instance, if your onNext/onEnd functions perform http requests to save the data somewhere else, you should set `saving` to true when the request begins, and back to false when its done.
 
 ### onProgress
 
@@ -126,7 +125,7 @@ Ex: `({ CurrentField, nextProps, BackProps, progress, saving }) => // your layou
 
 This prop works in two diferent ways:
 
-1. If you provide it an object, you can override the default components with your own. Check [here](#layout-object) the full list.
+1. If you provide it an object, you can override the default components with your own. Check [here](#layout-object) for the full list.
 2. If you need, however, more customization, you can provide it with a component (a [render prop](https://reactjs.org/docs/render-props.html)) that
    receives four props:
 
