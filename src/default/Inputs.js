@@ -60,6 +60,7 @@ export const CheckboxInput = ({
   value,
   onChange,
   topLabel,
+  setValue,
   ...props
 }) => {
   return (
@@ -78,7 +79,7 @@ export const CheckboxInput = ({
 };
 
 // What to do about booleans in values transformed to string?
-export const RadioInput = ({ label, choices, ...props }) => {
+export const RadioInput = ({ label, choices, setValue, ...props }) => {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">{label}</FormLabel>
@@ -103,15 +104,11 @@ export const RadioInput = ({ label, choices, ...props }) => {
     </FormControl>
   );
 };
-export const SelectInput = ({ label, value, choices, ...props }) => {
-  console.log("value", value);
+export const SelectInput = ({ label, value, choices, setValue, ...props }) => {
   return (
     <FormControl style={{ minWidth: 120 }}>
       <InputLabel>{label}</InputLabel>
-      <Select
-        onChange={value => props.setValue(value.target.value)}
-        value={value}
-      >
+      <Select onChange={value => setValue(value.target.value)} value={value}>
         {choices.map(choice => (
           <MenuItem key={choice} value={choice}>
             {choice}
@@ -122,16 +119,18 @@ export const SelectInput = ({ label, value, choices, ...props }) => {
   );
 };
 
-export const DropAvatar = props => {
+export const DropAvatar = ({ setValue, ...props }) => {
   return (
-    <DropPicture
-      maxDimension={200}
-      config={{
-        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET
-      }}
-      {...props}
-    />
+    <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+      <DropPicture
+        maxDimension={200}
+        config={{
+          apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+          storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET
+        }}
+        {...props}
+      />
+    </div>
   );
 };
 
@@ -139,12 +138,12 @@ export const Input = ({
   disabled,
   name,
   error,
+  setValue,
   helper = " ",
   label = startCase(name),
   placeholder = label,
   ...props
 }) => {
-  console.log("props", props);
   const helperText = error || helper;
   return (
     <TextField

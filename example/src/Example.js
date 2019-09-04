@@ -5,18 +5,19 @@ import { Card, CardHeader, CardContent } from "@material-ui/core";
 
 import { Stoopy } from "@seasonedsoftware/stoopy";
 
+// { name: "cover", type: "avatar" },
+
 const BookInfo = props => {
   return (
     <div>
       <h1>
-        <b>Title:</b>
-        {props.name}
+        <b>{props.bookName}</b>
       </h1>
-      <small>{props.year}</small>
+      <p>
+        by<small> {props.author}</small>
+      </p>
       <img src={props.cover} />
-      <p>Contact Channel: {props.contactChannel}</p>
-      <p>{props.termsAgreement ? "Agreed!" : "Did not agree yet!"}</p>
-      <p>{props.description}</p>
+      <p>Cover type: {props.coverType}</p>
       <p>
         <b>Genre:</b>
         {props.genre}
@@ -26,68 +27,93 @@ const BookInfo = props => {
 };
 
 const Example = () => {
-  const emptyBook = {
-    name: undefined,
-    year: undefined,
-    description: undefined,
-    cover: undefined,
-    termsAgreement: undefined,
-    contactChannel: undefined,
-    description: undefined,
-    genre: undefined
-  };
-  const [book, setBook] = useState(emptyBook);
-  console.log("Book", book);
+  const [book, setBook] = useState({ author: "You" });
+  const [logNext, setLogNext] = useState(null);
+  const [logEnd, setLogEnd] = useState(null);
+  const [logProgress, setLogProgress] = useState(null);
   return (
     <Card elevation={5} className="rating">
       <CardHeader title="Stoopy" />
       <CardContent>
         <Stoopy
-          onNext={setBook}
-          target={book}
+          initialState={book}
           fields={[
+            "author",
+            "bookName",
             {
               name: "genre",
               type: "select",
               choices: ["sci-fi", "drama", "fantasy"]
             },
-            "name",
-
-            { name: "description", type: "text", multiline: true },
-
-            { name: "cover", type: "avatar" },
             {
-              name: "contactChannel",
+              name: "coverType",
               type: "radio",
-              label: "Select the best channel for readers to contact you:",
-              choices: [
-                { label: "email", value: "email" },
-                { label: "telefone", value: "telefone" }
-              ]
+              choices: ["hardCover", "paperBack"]
             },
-            { name: "year", type: "date", label: "DATA" },
-
-            {
-              name: "termsAgreement",
-              type: "checkbox",
-              topLabel: "Do you agree with our terms?",
-              label: "I do!"
-            }
+            { name: "cover", type: "avatar" }
           ]}
+          onNext={({ value, values }) => {
+            setBook({ ...book, value });
+            setLogNext({ value, values });
+          }}
+          onEnd={values => {
+            setLogEnd(values);
+            setBook(values);
+          }}
+          onProgress={progress => setLogProgress(progress)}
+          title="Publish your book in a few steps!"
         >
           <BookInfo {...book} />
         </Stoopy>
       </CardContent>
-      <button style={{ width: 80 }} onClick={() => setBook(emptyBook)}>
-        Reset
-      </button>
-
       <SyntaxHighlighter language="javascript" style={prism}>
         {`
-import { Stoopy, BookInfo } from '@seasonedsoftware/stoopy'
+// Console logs printed bellow for your convenience:
+${(logNext &&
+          `onNext --> {
+  value: ${JSON.stringify(logNext.value)},
+  values: ${JSON.stringify(logNext.values)},
+}`) ||
+          ""}
+${(logEnd &&
+          `onEnd -->  ${JSON.stringify(logEnd)},
+`) ||
+          ""}
+${(logProgress &&
+          `onProgress -->  ${JSON.stringify(logProgress)},
+`) ||
+          ""}
+// End of logs
+
+import { Stoopy } from '@seasonedsoftware/stoopy'
 
 // MyComponent
-
+const [book, setBook] = useState({ author: 'You'});
+<Stoopy
+  fields={[
+    "author",
+    "bookName",
+    {
+      name: "genre",
+      type: "select",
+      choices: ["sci-fi", "drama", "fantasy"]
+    },
+    {
+      name: 'What kind of cover should we print?'
+    }
+    { name: "cover", type: "avatar" },
+  ]}
+  initialState={book} // Any field in here will be skiped (but still considered in step counting)
+  onNext={({ value, values}) => console.log('onNext -->', value, values)}
+  onEnd={values => {
+    console.log('onEnd -->', value, values)
+    setBook(values)
+  }}
+  onProgress={progress => console.log('onProgress -->',progress)}
+  title="Publish your book in a few steps!"
+>
+  <BookInfo {...book} />
+</Stoopy>
         `}
       </SyntaxHighlighter>
     </Card>

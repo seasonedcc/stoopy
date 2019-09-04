@@ -30,12 +30,7 @@ const justifyContent = ({ children, maxWidth = "sm", ...props }) => (
 
 export const NextButton = props => {
   return (
-    <div
-      style={{
-        marginTop: 20,
-        width: "100%"
-      }}
-    >
+    <div>
       <Button type="submit" variant="contained" color="primary" {...props}>
         Next
       </Button>
@@ -43,34 +38,40 @@ export const NextButton = props => {
   );
 };
 
-// Form header, title, etc...
-export const FormHeader = props => {
+export const BackButton = props => {
   return (
-    <>
-      <Typography style={{ marginBottom: 20 }} variant="h5">
-        STOOPY: THE MULTISTEP FORM
-      </Typography>
-    </>
+    <div>
+      <Button type="button" variant="contained" color="secondary" {...props}>
+        Back
+      </Button>
+    </div>
   );
 };
 
-// Wrapper for the whole component. Is it worth it?
-export const Wrapper = props => (
-  <div
-    style={{
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center"
-    }}
-  >
-    {props.children}
-  </div>
-);
+export const ProgressTracker = ({ progress }) => {
+  return (
+    <div style={{ marginTop: 10 }}>
+      <Typography variant="h5">
+        {progress.currentStep}/{progress.totalSteps}
+      </Typography>
+    </div>
+  );
+};
+// Form header, title, etc...
+export const FormHeader = ({
+  title = "Almost there! Just a few more steps..."
+}) => {
+  return (
+    <Typography style={{ marginBottom: 20 }} variant="h5">
+      {title}
+    </Typography>
+  );
+};
 
 // Default Loading component for transitions. Not sure if will still
 // be used after setting up transitions
 export const Loading = props => (
-  <Content textAlign="center" maxWidth="lg" {...props}>
+  <div textAlign="center" maxWidth="lg" {...props}>
     <CircularProgress />
-  </Content>
+  </div>
 );
