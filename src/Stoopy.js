@@ -131,6 +131,9 @@ const Stoopy = ({
     layout.ProgressTracker || defaultLayout.ProgressTracker
   const Loading = layout.Loading || defaultLayout.Loading
 
+  //  Destructuring properties to avoid errors if field is undefined
+  const { stepKey, name } = field
+
   // Updates progress when step changes
   useEffect(
     () => {
@@ -139,7 +142,7 @@ const Stoopy = ({
       }
     },
     // eslint-disable-next-line
-    [field && field.stepKey],
+    [stepKey],
   )
 
   useLayoutEffect(() => {
@@ -148,7 +151,7 @@ const Stoopy = ({
       invert.current = !invert.current
       firstRender.current = false
     }
-  }, [field && field.name])
+  }, [name])
 
   // NOTE: Prettier render conditionals possible?
   return saving ? (
