@@ -47,7 +47,7 @@ const Example = () => {
             },
             { name: "Resume", type: "text" },
             {
-              name: "coverType",
+              name: "What kind of cover should we print",
               type: "radio",
               choices: ["hardCover", "paperBack"]
             },
@@ -108,7 +108,7 @@ const [book, setBook] = useState({ author: 'You'});
     },
     { name: "Resume", type: "text" },
     {
-      name: "coverType",
+      name: "What kind of cover should we print",
       type: "radio",
       choices: ["hardCover", "paperBack"]
     },
