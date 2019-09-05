@@ -45,11 +45,19 @@ const Example = () => {
               type: "select",
               choices: ["sci-fi", "drama", "fantasy"]
             },
+            { name: "Resume", type: "text" },
             {
-              name: "coverType",
+              name: "What kind of cover should we print",
               type: "radio",
               choices: ["hardCover", "paperBack"]
             },
+            {
+              name: "Google Play and Apple Store",
+              type: "checkbox"
+            },
+            { name: "Published year", type: "year" },
+            { name: "Year/month", type: "yearMonth" },
+            { name: "Release Date", type: "date" },
             { name: "cover", type: "avatar" }
           ]}
           onNext={({ value, values }) => {
@@ -98,10 +106,20 @@ const [book, setBook] = useState({ author: 'You'});
       type: "select",
       choices: ["sci-fi", "drama", "fantasy"]
     },
+    { name: "Resume", type: "text" },
     {
-      name: 'What kind of cover should we print?'
-    }
-    { name: "cover", type: "avatar" },
+      name: "What kind of cover should we print",
+      type: "radio",
+      choices: ["hardCover", "paperBack"]
+    },
+    {
+      name: "Google Play and Apple Store",
+      type: "checkbox"
+    },
+    { name: "Published year", type: "year" },
+    { name: "Year/month", type: "yearMonth" },
+    { name: "Release Date", type: "date" },
+    { name: "cover", type: "avatar" }
   ]}
   initialState={book} // Any field in here will be skiped (but still considered in step counting)
   onNext={({ value, values}) => console.log('onNext -->', value, values)}
