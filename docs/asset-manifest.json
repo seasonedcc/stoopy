@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/stoopy/static/css/main.04f34a25.chunk.css",
-    "main.js": "/stoopy/static/js/main.ce5eb555.chunk.js",
-    "main.js.map": "/stoopy/static/js/main.ce5eb555.chunk.js.map",
-    "runtime~main.js": "/stoopy/static/js/runtime~main.934e70a4.js",
-    "runtime~main.js.map": "/stoopy/static/js/runtime~main.934e70a4.js.map",
-    "static/js/2.2b39439f.chunk.js": "/stoopy/static/js/2.2b39439f.chunk.js",
-    "static/js/2.2b39439f.chunk.js.map": "/stoopy/static/js/2.2b39439f.chunk.js.map",
+    "main.js": "/stoopy/static/js/main.d2c03b01.chunk.js",
+    "main.js.map": "/stoopy/static/js/main.d2c03b01.chunk.js.map",
+    "runtime~main.js": "/stoopy/static/js/runtime~main.e5f5446e.js",
+    "runtime~main.js.map": "/stoopy/static/js/runtime~main.e5f5446e.js.map",
+    "static/js/2.cf18313c.chunk.js": "/stoopy/static/js/2.cf18313c.chunk.js",
+    "static/js/2.cf18313c.chunk.js.map": "/stoopy/static/js/2.cf18313c.chunk.js.map",
     "index.html": "/stoopy/index.html",
-    "precache-manifest.47d04ac4a3b8fc46c84b7c2edd77646c.js": "/stoopy/precache-manifest.47d04ac4a3b8fc46c84b7c2edd77646c.js",
+    "precache-manifest.42c9d9059bc8d3f4763fec67d4e4e07e.js": "/stoopy/precache-manifest.42c9d9059bc8d3f4763fec67d4e4e07e.js",
     "service-worker.js": "/stoopy/service-worker.js",
     "static/css/main.04f34a25.chunk.css.map": "/stoopy/static/css/main.04f34a25.chunk.css.map"
   }
