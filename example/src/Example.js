@@ -99,8 +99,10 @@ const [book, setBook] = useState({ author: 'You'});
       choices: ["sci-fi", "drama", "fantasy"]
     },
     {
-      name: 'What kind of cover should we print?'
-    }
+      name: "coverType",
+      type: "radio",
+      choices: ["hardCover", "paperBack"]
+    },
     { name: "cover", type: "avatar" },
   ]}
   initialState={book} // Any field in here will be skiped (but still considered in step counting)
