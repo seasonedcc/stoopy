@@ -4,6 +4,7 @@ import reduce from 'lodash/reduce'
 import Animated from 'react-animated-transitions'
 import parseType from './fieldTypes'
 import 'animate.css'
+import './overwrite.css'
 
 export default ({
   field: {
@@ -21,6 +22,8 @@ export default ({
   fields,
   formState,
   show,
+  enter,
+  exit,
 }) => {
   // Get base settings from field.type
   const { Component: DefaultComponent, field, baseOpts } = parseType(
@@ -41,11 +44,12 @@ export default ({
       },
       {},
     )
+
   return name ? (
     <Animated>
       <Animated items>
         {show && (
-          <Animated item enter="fadeInLeft" exit="fadeOutRight">
+          <Animated item enter={enter} exit={exit}>
             <FieldComponent
               {...field({
                 ...baseOpts,
