@@ -1,9 +1,9 @@
-import React from "react";
-import get from "lodash/get";
-import reduce from "lodash/reduce";
-import Animated from "react-animated-transitions";
-import { parseType } from "./fieldTypes";
-import "animate.css";
+import React from 'react'
+import get from 'lodash/get'
+import reduce from 'lodash/reduce'
+import Animated from 'react-animated-transitions'
+import parseType from './fieldTypes'
+import 'animate.css'
 
 export default ({
   field: {
@@ -20,32 +20,28 @@ export default ({
   },
   fields,
   formState,
-  show
+  show,
 }) => {
-  if (!name) {
-    return <p>That's It!</p>;
-  }
-
   // Get base settings from field.type
   const { Component: DefaultComponent, field, baseOpts } = parseType(
     type,
-    fields
-  );
+    fields,
+  )
 
-  const FieldComponent = Component || DefaultComponent;
+  const FieldComponent = Component || DefaultComponent
 
-  // Remove null/empty values to prevent false overwritting baseOpts
-  const cleanProps = obj =>
+  // Remove null/empty values to prevent falsely overwritting baseOpts
+  const cleanProps = values =>
     reduce(
-      obj,
+      values,
       (result, value, key) => {
-        const obj = {};
-        obj[key] = value;
-        return value && value !== "" ? { ...result, ...obj } : result;
+        const obj = {}
+        obj[key] = value
+        return value && value !== '' ? { ...result, ...obj } : result
       },
-      {}
-    );
-  return (
+      {},
+    )
+  return name ? (
     <Animated>
       <Animated items>
         {show && (
@@ -59,19 +55,19 @@ export default ({
                   onBlur,
                   validate,
                   validadeOnBlur,
-                  touchOnChange
-                })
+                  touchOnChange,
+                }),
               })}
               autoFocus
               {...props}
-              value={get(formState.values, name, "")}
+              value={get(formState.values, name, '')}
               setValue={value => {
-                formState.setField(name, value);
+                formState.setField(name, value)
               }}
             />
           </Animated>
         )}
       </Animated>
     </Animated>
-  );
-};
+  ) : null
+}
