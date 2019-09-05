@@ -1,1 +1,3 @@
-export { Stoopy } from './Stoopy'
+import Stoopy from './Stoopy'
+
+export { Stoopy }
