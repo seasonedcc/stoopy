@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f246fa021d08067e8c216559860e8b43",
+    "revision": "02ede6196fd280fc41bceaeb0687138c",
     "url": "/stoopy/index.html"
   },
   {
-    "revision": "319f5700d9c4c8615e1d",
+    "revision": "f0ce5620b3674f644edd",
     "url": "/stoopy/static/css/main.04f34a25.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/stoopy/static/js/2.b95c46f8.chunk.js"
   },
   {
-    "revision": "319f5700d9c4c8615e1d",
-    "url": "/stoopy/static/js/main.b6f1cb03.chunk.js"
+    "revision": "f0ce5620b3674f644edd",
+    "url": "/stoopy/static/js/main.9f0719ce.chunk.js"
   },
   {
     "revision": "437726fd4013db05f2f4",

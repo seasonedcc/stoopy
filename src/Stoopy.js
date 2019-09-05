@@ -33,8 +33,8 @@ const Stoopy = ({
   const [animations, setAnimations] = useState({})
   const invert = useRef(true)
   const firstRender = useRef(true)
-  const fowardAnimation = { enter: 'fadeInLeft', exit: 'fadeOutRight' }
-  const backAnimation = { enter: 'fadeInRight', exit: 'fadeOutLeft' }
+  const fowardAnimation = { enter: 'fadeInRight', exit: 'fadeOutLeft' }
+  const backAnimation = { enter: 'fadeInLeft', exit: 'fadeOutRight' }
 
   //  Key of first step (to disable back button)
   const firstStepKey = useRef(1)

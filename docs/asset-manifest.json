@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/stoopy/static/css/main.04f34a25.chunk.css",
-    "main.js": "/stoopy/static/js/main.b6f1cb03.chunk.js",
-    "main.js.map": "/stoopy/static/js/main.b6f1cb03.chunk.js.map",
+    "main.js": "/stoopy/static/js/main.9f0719ce.chunk.js",
+    "main.js.map": "/stoopy/static/js/main.9f0719ce.chunk.js.map",
     "runtime~main.js": "/stoopy/static/js/runtime~main.934e70a4.js",
     "runtime~main.js.map": "/stoopy/static/js/runtime~main.934e70a4.js.map",
     "static/js/2.b95c46f8.chunk.js": "/stoopy/static/js/2.b95c46f8.chunk.js",
     "static/js/2.b95c46f8.chunk.js.map": "/stoopy/static/js/2.b95c46f8.chunk.js.map",
     "index.html": "/stoopy/index.html",
-    "precache-manifest.075637f85c0db912d7427dee11a599ed.js": "/stoopy/precache-manifest.075637f85c0db912d7427dee11a599ed.js",
+    "precache-manifest.2774ad052d234da6e87b346253fb2c19.js": "/stoopy/precache-manifest.2774ad052d234da6e87b346253fb2c19.js",
     "service-worker.js": "/stoopy/service-worker.js",
     "static/css/main.04f34a25.chunk.css.map": "/stoopy/static/css/main.04f34a25.chunk.css.map"
   }
