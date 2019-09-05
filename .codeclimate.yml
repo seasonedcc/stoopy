@@ -1,4 +1,4 @@
-version: "1"
+version: '1'
 plugins:
   duplication:
     enabled: true
@@ -15,15 +15,16 @@ plugins:
   nodesecurity:
     enabled: true
 exclude_patterns:
-- node_modules/
-- "**/__tests__/"
-- ".codeclimate.yml"
-- "**/*.html"
-- "**/*.md"
-- "**/*.json"
-- "yarn.lock"
-- "public/"
-- ".eslintrc"
-- ".eslintignore"
-- ".gitignore"
-- ".prettierrc"
+  - node_modules/
+  - '**/__tests__/'
+  - '.codeclimate.yml'
+  - '**/*.html'
+  - '**/*.md'
+  - '**/*.json'
+  - 'yarn.lock'
+  - 'public/'
+  - '.eslintrc'
+  - '.eslintignore'
+  - '.gitignore'
+  - '.prettierrc'
+  - 'docs/'
