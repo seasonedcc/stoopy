@@ -28,10 +28,13 @@ const Stoopy = ({
   const [formState, fields] = useFormState()
 
   // Refs and state for managing transitions
-  // NOTE: Weird names, but probally the whole aproach will change anyways
+  // NOTE: Perhaps too complex implementation
   const [visible, setVisible] = useState(true)
+  const [animations, setAnimations] = useState({})
   const invert = useRef(true)
   const firstRender = useRef(true)
+  const fowardAnimation = { enter: 'fadeInRight', exit: 'fadeOutLeft' }
+  const backAnimation = { enter: 'fadeInLeft', exit: 'fadeOutRight' }
 
   //  Key of first step (to disable back button)
   const firstStepKey = useRef(1)
@@ -87,14 +90,17 @@ const Stoopy = ({
   }
 
   // Action after each step back
-  const onStepBack = ({ stepKey }) => () => {
+  const onStepBack = ({ stepKey }) => async () => {
     const last = find(normalizedFields, ['stepKey', stepKey - 1])
 
+    // hide field with transitions
+    await setAnimations(backAnimation)
     firstRender.current = true
     setVisible(!visible)
+
     setTimeout(async () => {
       await setValues(omit(values, last.name))
-    }, 900)
+    }, 550)
   }
 
   // Action after each step foward
@@ -114,13 +120,14 @@ const Stoopy = ({
       onEnd && (await onEnd({ ...values, ...value }))
 
     // Hide field with transition
+    await setAnimations(fowardAnimation)
     firstRender.current = true
     setVisible(!visible)
 
     // Wait for the transition before changing state
     setTimeout(async () => {
       await setValues({ ...values, ...value })
-    }, 900)
+    }, 550)
   }
 
   // NOTE: Repetitive code, clean up.
@@ -146,7 +153,7 @@ const Stoopy = ({
   )
 
   useLayoutEffect(() => {
-    // Runs once, when there is a new field
+    // Runs once, when there is a new field. Shows field.
     if (firstRender.current) {
       invert.current = !invert.current
       firstRender.current = false
@@ -162,6 +169,7 @@ const Stoopy = ({
         <form key="form" onSubmit={onStepFoward}>
           <FormHeader progress={progress} title={title} />
           <CurrentField
+            {...animations}
             field={field}
             fields={fields}
             formState={formState}
