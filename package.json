@@ -24,6 +24,8 @@
     "scaffold": "node ./scripts/scaffold.js",
     "build": "npm run build:types && npm run build:js",
     "build:js": "rollup -c",
+    "release": "npm version",
+    "postrelease": "git push --tags && git push && npm publish",
     "build:types": "tsc --emitDeclarationOnly -p tsconfig.build.json",
     "start": "rollup -c -w",
     "prepare": "yarn run build",
