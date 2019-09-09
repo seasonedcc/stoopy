@@ -31,7 +31,7 @@
     "deploy": "gh-pages -d example/build",
     "release:login": "npm adduser",
     "release": "npm version",
-    "postrelease": "git push --tags && git push && npm publish",
+    "postrelease": "git push --tags && git push && npm publish"
   },
   "peerDependencies": {
     "@material-ui/core": "^4.2.1",
