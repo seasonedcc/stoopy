@@ -10,8 +10,11 @@ import find from 'lodash/find'
 import omit from 'lodash/omit'
 import startCase from 'lodash/startCase'
 import filter from 'lodash/filter'
+import debounce from 'lodash/debounce'
 import CurrentField from './CurrentField'
 import * as defaultLayout from './default/Layout'
+
+const DEBOUNCING_TIME = 2000
 
 const Stoopy = ({
   fields: propFields,
@@ -90,45 +93,56 @@ const Stoopy = ({
   }
 
   // Action after each step back
-  const onStepBack = ({ stepKey }) => async () => {
-    const last = find(normalizedFields, ['stepKey', stepKey - 1])
+  const onStepBack = ({ stepKey }) =>
+    debounce(
+      async () => {
+        const last = find(normalizedFields, ['stepKey', stepKey - 1])
 
-    // hide field with transitions
-    await setAnimations(backAnimation)
-    firstRender.current = true
-    setVisible(!visible)
+        // hide field with transitions
+        await setAnimations(backAnimation)
+        firstRender.current = true
+        setVisible(!visible)
 
-    setTimeout(async () => {
-      await setValues(omit(values, last.name))
-    }, 550)
-  }
+        await setValues(omit(values, last.name))
+      },
+      DEBOUNCING_TIME,
+      {
+        leading: true,
+        trailing: false,
+      },
+    )
 
   // Action after each step foward
-  const onStepFoward = async e => {
-    e.preventDefault()
-    const value = {}
-    value[field.name] = get(formState.values, field.name)
-    onNext &&
-      (await onNext({
-        value: { ...value },
-        values: { ...values, ...value },
-        progress,
-      }))
+  const onStepFoward = debounce(
+    async e => {
+      e.preventDefault()
+      const value = {}
+      value[field.name] = get(formState.values, field.name)
+      onNext &&
+        (await onNext({
+          value: { ...value },
+          values: { ...values, ...value },
+          progress,
+        }))
 
-    // Call onEnd if its the last step
-    if (field.stepKey === propFields.length)
-      onEnd && (await onEnd({ ...values, ...value }))
+      // Call onEnd if its the last step
+      if (field.stepKey === propFields.length)
+        onEnd && (await onEnd({ ...values, ...value }))
 
-    // Hide field with transition
-    await setAnimations(fowardAnimation)
-    firstRender.current = true
-    setVisible(!visible)
+      // Hide field with transition
+      await setAnimations(fowardAnimation)
+      firstRender.current = true
+      setVisible(!visible)
 
-    // Wait for the transition before changing state
-    setTimeout(async () => {
+      // Wait for the transition before changing state
       await setValues({ ...values, ...value })
-    }, 550)
-  }
+    },
+    DEBOUNCING_TIME,
+    {
+      leading: true,
+      trailing: false,
+    },
+  )
 
   // NOTE: Repetitive code, clean up.
   const FormHeader = layout.FormHeader || defaultLayout.FormHeader
