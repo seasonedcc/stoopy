@@ -1,11 +1,9 @@
-import React, { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import prism from "react-syntax-highlighter/dist/esm/styles/prism/prism";
-import { Card, CardHeader, CardContent } from "@material-ui/core";
+import React, { useState } from 'react'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import prism from 'react-syntax-highlighter/dist/esm/styles/prism/prism'
+import { Card, CardHeader, CardContent } from '@material-ui/core'
 
-import { Stoopy } from "@seasonedsoftware/stoopy";
-
-// { name: "cover", type: "avatar" },
+import { Stoopy } from '@seasonedsoftware/stoopy'
 
 const BookInfo = props => {
   return (
@@ -23,14 +21,14 @@ const BookInfo = props => {
         {props.genre}
       </p>
     </div>
-  );
-};
+  )
+}
 
 const Example = () => {
-  const [book, setBook] = useState({ author: "You" });
-  const [logNext, setLogNext] = useState(null);
-  const [logEnd, setLogEnd] = useState(null);
-  const [logProgress, setLogProgress] = useState(null);
+  const [book, setBook] = useState({ author: 'You' })
+  const [logNext, setLogNext] = useState(null)
+  const [logEnd, setLogEnd] = useState(null)
+  const [logProgress, setLogProgress] = useState(null)
   return (
     <Card elevation={5} className="rating">
       <CardHeader title="Stoopy" />
@@ -38,35 +36,35 @@ const Example = () => {
         <Stoopy
           initialState={book}
           fields={[
-            "author",
-            "bookName",
+            'author',
+            'bookName',
             {
-              name: "genre",
-              type: "select",
-              choices: ["sci-fi", "drama", "fantasy"]
+              name: 'genre',
+              type: 'select',
+              choices: ['sci-fi', 'drama', 'fantasy'],
             },
-            { name: "Resume", type: "text" },
+            { name: 'Resume', type: 'text' },
             {
-              name: "What kind of cover should we print",
-              type: "radio",
-              choices: ["hardCover", "paperBack"]
+              name: 'What kind of cover should we print',
+              type: 'radio',
+              choices: ['hardCover', 'paperBack'],
             },
             {
-              name: "Google Play and Apple Store",
-              type: "checkbox"
+              name: 'Google Play and Apple Store',
+              type: 'checkbox',
             },
-            { name: "Published year", type: "year" },
-            { name: "Year/month", type: "yearMonth" },
-            { name: "Release Date", type: "date" },
-            { name: "cover", type: "avatar" }
+            { name: 'Published year', type: 'year' },
+            { name: 'Year/month', type: 'yearMonth' },
+            { name: 'Release Date', type: 'date' },
+            { name: 'cover', type: 'avatar' },
           ]}
           onNext={({ value, values }) => {
-            setBook({ ...book, value });
-            setLogNext({ value, values });
+            setBook({ ...book, value })
+            setLogNext({ value, values })
           }}
           onEnd={values => {
-            setLogEnd(values);
-            setBook(values);
+            setLogEnd(values)
+            setBook(values)
           }}
           onProgress={progress => setLogProgress(progress)}
           title="Publish your book in a few steps!"
@@ -78,19 +76,19 @@ const Example = () => {
         {`
 // Console logs printed bellow for your convenience:
 ${(logNext &&
-          `onNext --> {
+  `onNext --> {
   value: ${JSON.stringify(logNext.value)},
   values: ${JSON.stringify(logNext.values)},
 }`) ||
-          ""}
+  ''}
 ${(logEnd &&
-          `onEnd -->  ${JSON.stringify(logEnd)},
+  `onEnd -->  ${JSON.stringify(logEnd)},
 `) ||
-          ""}
+  ''}
 ${(logProgress &&
-          `onProgress -->  ${JSON.stringify(logProgress)},
+  `onProgress -->  ${JSON.stringify(logProgress)},
 `) ||
-          ""}
+  ''}
 // End of logs
 
 import { Stoopy } from '@seasonedsoftware/stoopy'
@@ -135,7 +133,7 @@ const [book, setBook] = useState({ author: 'You'});
         `}
       </SyntaxHighlighter>
     </Card>
-  );
-};
+  )
+}
 
-export default Example;
+export default Example
