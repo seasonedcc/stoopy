@@ -29,10 +29,10 @@ Check [the samples](https://seasonedsoftware.github.io/stoopy/).
 Ex:
 
 ```javascript
-[
-  "field1", // defaults to text input,
-  { name: "field2", label: "Second Field", type: "field" } // field object
-];
+;[
+  'field1', // defaults to text input,
+  { name: 'field2', label: 'Second Field', type: 'field' }, // field object
+]
 ```
 
 Here is where you define your form itself.
@@ -50,6 +50,7 @@ This are all available options:
 { name: 'name', // required
 label: 'label', // if none is provided, will default to Name (Capitalized)
 type: 'fieldType', // if none is provided, will default to text
+optional: true, // if set to true, the field can be skiped without filling. By default, all fields are required.
 choices: ['choice1', { value: 'choice2', label: 'differentName' }], // if using default multiple choice inputs like radio, select, etc
 Component: ({ value, setValue, color })  => (
   <input
