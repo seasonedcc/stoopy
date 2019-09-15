@@ -23,6 +23,7 @@ const parseType = (type, fields) => {
     checkbox: {
       Component: CheckboxInput,
       field: fields.checkbox,
+      optional: true,
       baseOpts: {
         onChange: e => e.target.value,
       },
