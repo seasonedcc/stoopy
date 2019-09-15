@@ -1,5 +1,4 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
-
 import { useFormState } from 'react-use-form-state'
 import get from 'lodash/get'
 import map from 'lodash/map'
@@ -11,8 +10,10 @@ import omit from 'lodash/omit'
 import startCase from 'lodash/startCase'
 import filter from 'lodash/filter'
 import debounce from 'lodash/debounce'
+
 import CurrentField from './CurrentField'
 import * as defaultLayout from './default/Layout'
+import parseType from './fieldTypes'
 
 const DEBOUNCING_TIME = 2000
 
@@ -44,18 +45,23 @@ const Stoopy = ({
 
   // Normalize shortened versions into field objects
   const normalizedFields = map(propFields, (field, index) => {
+    const defaultOpts = parseType(field.type, fields)
     if (typeof field === 'string') {
       return {
         name: field,
         stepKey: index + 1,
         type: 'text',
         label: startCase(field),
+        required: defaultOpts.required || true,
+        ...defaultOpts,
       }
     }
     return {
       type: 'text',
       stepKey: index + 1,
       label: startCase(field.name),
+      required: defaultOpts.required || true,
+      ...defaultOpts,
       ...field,
     }
   })
@@ -78,10 +84,9 @@ const Stoopy = ({
   }
 
   // Filter fields, removing those already on state
-  const filteredFields = filter(
-    normalizedFields,
-    field => !get(values, field.name),
-  )
+  const filteredFields = filter(normalizedFields, field => {
+    return get(values, field.name) === undefined
+  })
 
   // Set current field
   const field = head(filteredFields)
@@ -153,7 +158,7 @@ const Stoopy = ({
   const Loading = layout.Loading || defaultLayout.Loading
 
   //  Destructuring properties to avoid errors if field is undefined
-  const { stepKey, name } = field
+  const { stepKey, name, required } = field
 
   // Updates progress when step changes
   useEffect(
@@ -203,7 +208,9 @@ const Stoopy = ({
               disabled={field.stepKey === firstStepKey.current}
             />
             <ProgressTracker progress={progress} />
-            <NextButton disabled={!get(formState.validity, field.name)} />
+            {console.log('formState', formState.values)}
+            {console.log('values', values)}
+            <NextButton disabled={required && !get(formState.validity, name)} />
           </div>
         </form>
       )}

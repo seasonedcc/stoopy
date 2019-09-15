@@ -17,6 +17,7 @@ export default ({
     touchOnChange,
     Component,
     stepKey,
+    field,
     ...props
   },
   fields,
@@ -25,14 +26,6 @@ export default ({
   enter,
   exit,
 }) => {
-  // Get base settings from field.type
-  const { Component: DefaultComponent, field, baseOpts } = parseType(
-    type,
-    fields,
-  )
-
-  const FieldComponent = Component || DefaultComponent
-
   // Remove null/empty values to prevent falsely overwritting baseOpts
   const cleanProps = values =>
     reduce(
@@ -50,9 +43,8 @@ export default ({
       <Animated items>
         {show && (
           <Animated item enter={enter} exit={exit}>
-            <FieldComponent
+            <Component
               {...field({
-                ...baseOpts,
                 ...cleanProps({
                   name,
                   onChange,
