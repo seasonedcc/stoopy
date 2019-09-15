@@ -42,7 +42,7 @@ const Example = () => {
               name: 'genre',
               type: 'select',
               choices: ['sci-fi', 'drama', 'fantasy'],
-              required: false
+              optional: true
             },
             { name: 'Resume', type: 'text' },
             {

@@ -52,7 +52,7 @@ const Stoopy = ({
         stepKey: index + 1,
         type: 'text',
         label: startCase(field),
-        required: defaultOpts.required || true,
+        optional: defaultOpts.optional || false,
         ...defaultOpts,
       }
     }
@@ -60,7 +60,7 @@ const Stoopy = ({
       type: 'text',
       stepKey: index + 1,
       label: startCase(field.name),
-      required: defaultOpts.required || true,
+      optional: defaultOpts.optional || false,
       ...defaultOpts,
       ...field,
     }
@@ -158,7 +158,7 @@ const Stoopy = ({
   const Loading = layout.Loading || defaultLayout.Loading
 
   //  Destructuring properties to avoid errors if field is undefined
-  const { stepKey, name, required } = field
+  const { stepKey, name, optional } = field
 
   // Updates progress when step changes
   useEffect(
@@ -210,7 +210,7 @@ const Stoopy = ({
             <ProgressTracker progress={progress} />
             {console.log('formState', formState.values)}
             {console.log('values', values)}
-            <NextButton disabled={required && !get(formState.validity, name)} />
+            <NextButton disabled={!get(formState.validity, name) || optional} />
           </div>
         </form>
       )}
