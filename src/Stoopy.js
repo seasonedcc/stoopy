@@ -43,7 +43,7 @@ const Stoopy = ({
   //  Key of first step (to disable back button)
   const firstStepKey = useRef(1)
 
-  // Normalize shortened versions into field objects
+  // Normalize shortened versions into field objects and parse type defaults
   const normalizedFields = map(propFields, (field, index) => {
     const defaultOpts = parseType(field.type, fields)
     if (typeof field === 'string') {
@@ -220,38 +220,3 @@ const Stoopy = ({
 }
 
 export default Stoopy
-//
-// RENDER PROP IMPLEMENTATION
-//
-// const LayoutComponent = ({
-//   CurrentField,
-//   backProps,
-//   nextProps,
-//   progress
-// }) => {
-//   const {
-//     FormHeader,
-//     BackButton,
-//     NextButton,
-//     ProgressTracker
-//   } = defaultLayout;
-//   return (
-//     <>
-//       <FormHeader title="Add your book in a few steps!" />
-//       <CurrentField />
-//       <div
-//         style={{
-//           display: "flex",
-//           width: "100%",
-//           justifyContent: "space-between",
-//           alignItems: "center",
-//           marginTop: 20
-//         }}
-//       >
-//         <BackButton {...backProps} />
-//         <ProgressTracker progress={progress} />
-//         <NextButton />
-//       </div>
-//     </>
-//   );
-// };
