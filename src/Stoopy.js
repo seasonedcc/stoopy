@@ -52,7 +52,7 @@ const Stoopy = ({
         stepKey: index + 1,
         type: 'text',
         label: startCase(field),
-        optional: defaultOpts.optional || false,
+        validate: value => value.length > 0,
         ...defaultOpts,
       }
     }
@@ -60,7 +60,7 @@ const Stoopy = ({
       type: 'text',
       stepKey: index + 1,
       label: startCase(field.name),
-      optional: defaultOpts.optional || false,
+      optional: defaultOpts.optional || undefined,
       ...defaultOpts,
       ...field,
     }
@@ -208,9 +208,11 @@ const Stoopy = ({
               disabled={field.stepKey === firstStepKey.current}
             />
             <ProgressTracker progress={progress} />
-            {console.log('formState', formState.values)}
-            {console.log('values', values)}
-            <NextButton disabled={!get(formState.validity, name) || optional} />
+            {console.log('formState', formState)}
+            {console.log('opt', optional)}
+            <NextButton
+              disabled={!(optional || get(formState.validity, name))}
+            />
           </div>
         </form>
       )}

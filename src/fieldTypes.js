@@ -13,6 +13,14 @@ import {
 // Get correct component and field type from type provided
 const parseType = (type, fields) => {
   const list = {
+    text: {
+      baseOpts: {
+        validate: e => {
+          console.log(e)
+          return e.length > 0
+        },
+      },
+    },
     select: {
       Component: SelectInput,
       field: fields.select,
