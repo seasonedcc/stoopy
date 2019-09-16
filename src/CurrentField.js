@@ -17,6 +17,8 @@ export default ({
     Component,
     stepKey,
     field,
+    baseOpts,
+    optional,
     ...props
   },
   formState,
