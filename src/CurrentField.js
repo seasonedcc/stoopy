@@ -2,7 +2,6 @@ import React from 'react'
 import get from 'lodash/get'
 import reduce from 'lodash/reduce'
 import Animated from 'react-animated-transitions'
-import parseType from './fieldTypes'
 import 'animate.css'
 import './overwrite.css'
 
@@ -20,7 +19,6 @@ export default ({
     field,
     ...props
   },
-  fields,
   formState,
   show,
   enter,
@@ -57,6 +55,7 @@ export default ({
               autoFocus
               {...props}
               value={get(formState.values, name, '')}
+              error={get(formState.errors, name, '')}
               setValue={value => {
                 formState.setField(name, value)
               }}
