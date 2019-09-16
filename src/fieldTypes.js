@@ -14,9 +14,10 @@ import {
 const parseType = (type, fields) => {
   const list = {
     text: {
+      Component: Input,
+      field: fields.text,
       baseOpts: {
         validate: e => {
-          console.log(e)
           return e.length > 0
         },
       },
