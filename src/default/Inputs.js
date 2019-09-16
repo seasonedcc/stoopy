@@ -60,7 +60,7 @@ export const CheckboxInput = ({
       <FormGroup {...props}>
         <FormControlLabel
           control={
-            <Checkbox checked={value} onChange={onChange} value="true" />
+            <Checkbox checked={!!value} onChange={onChange} value="true" />
           }
           label={label}
         />
@@ -84,11 +84,7 @@ export const RadioInput = ({ label, choices, setValue, ...props }) => {
                   value: choice,
                 }
           return (
-            <FormControlLabel
-              key={choice.label}
-              control={<Radio />}
-              {...opts}
-            />
+            <FormControlLabel key={opts.value} control={<Radio />} {...opts} />
           )
         })}
       </RadioGroup>
