@@ -208,8 +208,6 @@ const Stoopy = ({
               disabled={field.stepKey === firstStepKey.current}
             />
             <ProgressTracker progress={progress} />
-            {console.log('formState', formState)}
-            {console.log('opt', optional)}
             <NextButton
               disabled={!(optional || get(formState.validity, name))}
             />
