@@ -109,14 +109,7 @@ export const SelectInput = ({ label, value, choices, setValue }) => {
 export const DropAvatar = ({ setValue, ...props }) => {
   return (
     <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <DropPicture
-        maxDimension={200}
-        config={{
-          apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-          storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-        }}
-        {...props}
-      />
+      <DropPicture maxDimension={200} {...props} />
     </div>
   )
 }
