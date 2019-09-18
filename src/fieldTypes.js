@@ -10,7 +10,6 @@ import {
   Input,
 } from './default/Inputs'
 
-// Get correct component and field type from type provided
 const parseType = (type, fields) => {
   const list = {
     text: {
@@ -44,12 +43,10 @@ const parseType = (type, fields) => {
         onChange: e => e.target.value,
       },
     },
-    // TODO: Finish/improve DateTime related fields
     date: {
       Component: DateInput,
       field: fields.raw,
       baseOpts: {
-        // NOTE: Erase time?
         onChange: dateTime => dateTime.toUTC().toString(),
       },
     },
@@ -66,17 +63,9 @@ const parseType = (type, fields) => {
       Component: MonthYearInput,
       field: fields.raw,
       baseOpts: {
-        // NOTE: Erase time?
         onChange: dateTime => dateTime.toUTC().toString(),
       },
     },
-    // time: {
-    //   Component: TimeInput,
-    //   field: fields.raw,
-    //   baseOpts: {
-    //     onChange: dateTime => dateTime.toUTC().toString()
-    //   }
-    // },
     avatar: {
       Component: DropAvatar,
       field: fields.raw,
@@ -84,8 +73,6 @@ const parseType = (type, fields) => {
         onChange: file => file.url,
       },
     },
-    // images: { Component: ImagesComponent, field: 'raw' },
-    // files: { Component: FilesComponent, field: 'raw' },
   }
 
   return get(list, type, {
