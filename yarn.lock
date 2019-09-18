@@ -9299,9 +9299,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-animated-transitions@vractal/react-animated-transitions.git:
+react-animated-transitions@^0.0.6:
   version "0.0.6"
-  resolved "https://codeload.github.com/vractal/react-animated-transitions/tar.gz/f6bcddc47a7a1a524ea9f7eddb934ef97b995546"
+  resolved "https://registry.yarnpkg.com/react-animated-transitions/-/react-animated-transitions-0.0.6.tgz#e6eee0b0fef1d4c580a3e5bdb9fcbaab0a870404"
+  integrity sha512-qchE0VsM+scRPhHIRKH1lrDyP1M9K+4btgNSwZl9OsCxvrbilCR2K/Zuj1lNDdt3oG3OGGCozW3qQGtrtVue6g==
   dependencies:
     prop-types "^15.6.1"
   optionalDependencies:
