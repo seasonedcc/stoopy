@@ -1,12 +1,87 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders correctly 1`] = `
+exports[`BackButton renders correctly 1`] = `
+<div>
+  <button
+    className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary"
+    disabled={false}
+    onBlur={[Function]}
+    onClick={[MockFunction]}
+    onDragLeave={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseDown={[Function]}
+    onMouseLeave={[Function]}
+    onMouseUp={[Function]}
+    onTouchEnd={[Function]}
+    onTouchMove={[Function]}
+    onTouchStart={[Function]}
+    tabIndex={0}
+    type="button"
+  >
+    <span
+      className="MuiButton-label"
+    >
+      Back
+    </span>
+  </button>
+</div>
+`;
+
+exports[`FormHeader renders correctly 1`] = `
+<h5
+  className="MuiTypography-root MuiTypography-h5"
+  style={
+    Object {
+      "marginBottom": 20,
+    }
+  }
+>
+  Foobar
+</h5>
+`;
+
+exports[`Loading renders correctly 1`] = `
+<div
+  maxWidth="lg"
+  textAlign="center"
+>
+  <div
+    className="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+    role="progressbar"
+    style={
+      Object {
+        "height": 40,
+        "width": 40,
+      }
+    }
+  >
+    <svg
+      className="MuiCircularProgress-svg"
+      viewBox="22 22 44 44"
+    >
+      <circle
+        className="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+        cx={44}
+        cy={44}
+        fill="none"
+        r={20.2}
+        strokeWidth={3.6}
+        style={Object {}}
+      />
+    </svg>
+  </div>
+</div>
+`;
+
+exports[`NextButton renders correctly 1`] = `
 <div>
   <button
     className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
     disabled={false}
-    foo="bar"
     onBlur={[Function]}
+    onClick={[MockFunction]}
     onDragLeave={[Function]}
     onFocus={[Function]}
     onKeyDown={[Function]}
@@ -25,6 +100,26 @@ exports[`renders correctly 1`] = `
     >
       Next
     </span>
+    <span
+      className="MuiTouchRipple-root"
+    />
   </button>
+</div>
+`;
+
+exports[`ProgressTracker renders correctly 1`] = `
+<div
+  style={
+    Object {
+      "marginTop": 10,
+    }
+  }
+>
+  <h5
+    className="MuiTypography-root MuiTypography-h5"
+  >
+    1
+    /
+  </h5>
 </div>
 `;

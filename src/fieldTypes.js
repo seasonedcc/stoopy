@@ -1,7 +1,6 @@
 import get from 'lodash/get'
 import { SelectInput, CheckboxInput, RadioInput, Input } from './default/Inputs'
 
-// Get correct component and field type from type provided
 const parseType = (type, fields) => {
   const list = {
     text: {
