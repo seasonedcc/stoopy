@@ -79,10 +79,6 @@ Those are all the currently available types, some are custom types, some have ex
 - `select`
 - `checkbox`
 - `radio`
-- `date`
-- `year`
-- `yearMonth`
-- `avatar`
 
 ### initialState
 
@@ -156,12 +152,6 @@ Those are the currently available defaults:
 - `SelectInput`
 - `RadioInput`
 - `CheckboxInput`
-- `DropAvatar`
-- `DateInput`
-- `YearInput`
-- `MonthYearInput`
-
-More coming soon :)
 
 ### title
 
