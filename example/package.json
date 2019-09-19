@@ -7,7 +7,6 @@
   "dependencies": {
     "@material-ui/core": "^4.2.1",
     "@material-ui/icons": "^4.2.1",
-    "@material-ui/pickers": "^3.2.2",
     "@reach/router": "latest",
     "@seasonedsoftware/stoopy": "link:..",
     "prop-types": "latest",
@@ -16,7 +15,9 @@
     "react-scripts": "latest",
     "react-syntax-highlighter": "^11.0.2",
     "firebase": "^6.3.4",
-    "uploods": "^0.5.1"
+    "uploods": "^0.5.1",
+    "react-use-form-state": "^0.11.0"
+
   },
   "scripts": {
     "start": "react-scripts start",
