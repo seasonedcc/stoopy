@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import prism from 'react-syntax-highlighter/dist/esm/styles/prism/prism'
 import { Card, CardHeader, CardContent } from '@material-ui/core'
-
+import { DropPicture } from 'uploods'
 import { Stoopy } from '@seasonedsoftware/stoopy'
 
 const BookInfo = props => {
@@ -54,10 +54,22 @@ const Example = () => {
               name: 'Google Play and Apple Store',
               type: 'checkbox',
             },
-            { name: 'Published year', type: 'year' },
-            { name: 'Year/month', type: 'yearMonth' },
-            { name: 'Release Date', type: 'date' },
-            { name: 'cover', type: 'avatar' },
+            { name: 'cover',
+              type: 'raw',
+              Component: ({ setValue, ...props }) => (
+                  <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                    <DropPicture
+                      maxDimension={200}
+                      config={{
+                        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+                        storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET ,
+                      }}
+                      {...props}
+                      />
+                  </div>
+                ),
+                onChange: file => file.url,
+              },
           ]}
           onNext={({ value, values }) => {
             setBook({ ...book, value })
@@ -98,27 +110,40 @@ import { Stoopy } from '@seasonedsoftware/stoopy'
 const [book, setBook] = useState({ author: 'You'});
 <Stoopy
   fields={[
-    "author",
-    "bookName",
+    'author',
+    'bookName',
     {
-      name: "genre",
-      type: "select",
-      choices: ["sci-fi", "drama", "fantasy"]
+      name: 'genre',
+      type: 'select',
+      choices: ['sci-fi', 'drama', 'fantasy'],
+      optional: true
     },
-    { name: "Resume", type: "text" },
+    { name: 'Resume', type: 'text' },
     {
-      name: "What kind of cover should we print",
-      type: "radio",
-      choices: ["hardCover", "paperBack"]
+      name: 'What kind of cover should we print',
+      type: 'radio',
+      choices: ['hardCover', 'paperBack'],
     },
     {
-      name: "Google Play and Apple Store",
-      type: "checkbox"
+      name: 'Google Play and Apple Store',
+      type: 'checkbox',
     },
-    { name: "Published year", type: "year" },
-    { name: "Year/month", type: "yearMonth" },
-    { name: "Release Date", type: "date" },
-    { name: "cover", type: "avatar" }
+    { name: 'cover',
+      type: 'raw',
+      Component: ({ setValue, ...props }) => (
+          <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+            <DropPicture
+              maxDimension={200}
+              config={{
+                apiKey,
+                storageBucket,
+              }}
+              {...props}
+              />
+          </div>
+        ),
+        onChange: file => file.url,
+      },
   ]}
   initialState={book} // Any field in here will be skiped (but still considered in step counting)
   onNext={({ value, values}) => console.log('onNext -->', value, values)}

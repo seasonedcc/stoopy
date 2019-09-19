@@ -5,6 +5,7 @@ import external from 'rollup-plugin-peer-deps-external'
 import babel from 'rollup-plugin-babel'
 import json from 'rollup-plugin-json'
 import postcss from 'rollup-plugin-postcss'
+import filesize from 'rollup-plugin-filesize'
 import pkg from './package.json'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx']
@@ -18,7 +19,6 @@ const config = {
     'lodash',
     '@material-ui/core',
     '@material-ui/icons',
-    'firebase',
   ],
   plugins: [
     // Allows node_modules resolution
@@ -43,6 +43,7 @@ const config = {
       exclude: 'node_modules/**',
     }),
     external(),
+    filesize(),
   ],
 
   output: [

@@ -12,38 +12,7 @@ import {
   Checkbox,
   InputLabel,
 } from '@material-ui/core'
-import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import { DropPicture } from 'uploods'
 import startCase from 'lodash/startCase'
-import LuxonUtils from '@date-io/luxon'
-import { DateTime } from 'luxon'
-
-export const YearInput = props => {
-  return <DateInput views={['year']} {...props} />
-}
-export const MonthYearInput = props => {
-  return <DateInput views={['month', 'year']} {...props} />
-}
-
-export const TimeInput = () => {
-  return null
-}
-
-export const DateInput = ({ label, value, onChange, views }) => {
-  const normalizedValue =
-    value === '' ? DateTime.local() : DateTime.fromISO(value)
-  return (
-    <MuiPickersUtilsProvider utils={LuxonUtils}>
-      <DatePicker
-        views={views}
-        label={label}
-        autoOk
-        onChange={onChange}
-        value={normalizedValue}
-      />
-    </MuiPickersUtilsProvider>
-  )
-}
 
 export const CheckboxInput = ({
   label,
@@ -103,14 +72,6 @@ export const SelectInput = ({ label, value, choices, setValue }) => {
         ))}
       </Select>
     </FormControl>
-  )
-}
-
-export const DropAvatar = ({ setValue, ...props }) => {
-  return (
-    <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-      <DropPicture maxDimension={200} {...props} />
-    </div>
   )
 }
 

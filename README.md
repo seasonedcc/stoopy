@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-yarn add @seasonedsoftware/stoopy
+yarn add stoopy
 ```
 
 ## Usage
@@ -79,10 +79,6 @@ Those are all the currently available types, some are custom types, some have ex
 - `select`
 - `checkbox`
 - `radio`
-- `date`
-- `year`
-- `yearMonth`
-- `avatar`
 
 ### initialState
 
@@ -156,12 +152,6 @@ Those are the currently available defaults:
 - `SelectInput`
 - `RadioInput`
 - `CheckboxInput`
-- `DropAvatar`
-- `DateInput`
-- `YearInput`
-- `MonthYearInput`
-
-More coming soon :)
 
 ### title
 
@@ -173,7 +163,7 @@ A string to be used as title on top of the form.
 
 Ex: `() => <h1>Congrats, you just finished this form!</h1>`
 
-When there are no more fields, stoopy will render the children.
+When there are no more fields, stoopy will render the children. If none is provided, it renders nothing (`null`).
 
 ## License
 

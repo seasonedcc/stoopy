@@ -2,8 +2,7 @@ import React from 'react'
 import get from 'lodash/get'
 import reduce from 'lodash/reduce'
 import Animated from 'react-animated-transitions'
-import 'animate.css'
-import './overwrite.css'
+import './animations.css'
 
 export default ({
   field: {
