@@ -3,7 +3,7 @@
 ## Install
 
 ```bash
-yarn add @seasonedsoftware/stoopy
+yarn add stoopy
 ```
 
 ## Usage
@@ -163,7 +163,7 @@ A string to be used as title on top of the form.
 
 Ex: `() => <h1>Congrats, you just finished this form!</h1>`
 
-When there are no more fields, stoopy will render the children.
+When there are no more fields, stoopy will render the children. If none is provided, it renders nothing (`null`).
 
 ## License
 
