@@ -69,24 +69,6 @@ exports[`CheckboxInput renders correctly 1`] = `
 </fieldset>
 `;
 
-exports[`DropAvatar renders correctly 1`] = `
-<div
-  style={
-    Object {
-      "display": "flex",
-      "justifyContent": "center",
-      "width": "100%",
-    }
-  }
->
-  <div
-    maxDimension={200}
-  >
-    DropPicture
-  </div>
-</div>
-`;
-
 exports[`Input renders correctly 1`] = `
 <div
   className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
@@ -128,40 +110,6 @@ exports[`Input renders correctly 1`] = `
   >
     foobarError
   </p>
-</div>
-`;
-
-exports[`MonthYearInput renders correctly 1`] = `
-<div
-  className="MuiFormControl-root MuiTextField-root"
-  format="LLLL yyyy"
-  onClick={[Function]}
-  onKeyDown={[Function]}
->
-  <label
-    className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-    data-shrink={true}
-  >
-    Foobar
-  </label>
-  <div
-    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-    onClick={[Function]}
-  >
-    <input
-      aria-invalid={false}
-      className="MuiInputBase-input MuiInput-input"
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      readOnly={true}
-      required={false}
-      type="text"
-      value="September 2019"
-    />
-  </div>
-  
 </div>
 `;
 
@@ -427,75 +375,5 @@ exports[`SelectInput renders correctly 1`] = `
       />
     </svg>
   </div>
-</div>
-`;
-
-exports[`TimeInput renders correctly 1`] = `null`;
-
-exports[`YearInput renders correctly 1`] = `
-<div
-  className="MuiFormControl-root MuiTextField-root"
-  format="yyyy"
-  onClick={[Function]}
-  onKeyDown={[Function]}
->
-  <label
-    className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-    data-shrink={true}
-  >
-    Foobar
-  </label>
-  <div
-    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-    onClick={[Function]}
-  >
-    <input
-      aria-invalid={false}
-      className="MuiInputBase-input MuiInput-input"
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      readOnly={true}
-      required={false}
-      type="text"
-      value="2019"
-    />
-  </div>
-  
-</div>
-`;
-
-exports[`YearInput renders correctly 2`] = `
-<div
-  className="MuiFormControl-root MuiTextField-root"
-  format="yyyy"
-  onClick={[Function]}
-  onKeyDown={[Function]}
->
-  <label
-    className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiFormLabel-filled"
-    data-shrink={true}
-  >
-    Foobar
-  </label>
-  <div
-    className="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-formControl MuiInput-formControl"
-    onClick={[Function]}
-  >
-    <input
-      aria-invalid={false}
-      className="MuiInputBase-input MuiInput-input"
-      disabled={false}
-      onBlur={[Function]}
-      onChange={[Function]}
-      onFocus={[Function]}
-      readOnly={true}
-      required={false}
-      type="text"
-      value="2019"
-    />
-  </div>
-  
 </div>
 `;

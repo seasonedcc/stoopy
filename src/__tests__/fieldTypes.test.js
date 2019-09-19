@@ -4,10 +4,6 @@ jest.mock('../default/Inputs', () => ({
   SelectInput: 'select',
   CheckboxInput: 'checkbox',
   RadioInput: 'radio',
-  DropAvatar: 'dropAvatar',
-  DateInput: 'dateInput',
-  YearInput: 'yearInput',
-  MonthYearInput: 'monthYearInput',
   Input: 'input',
 }))
 
@@ -74,47 +70,47 @@ describe('when type is radio', () => {
     )
   })
 })
-
-describe('when type is date', () => {
-  it('returns dateInput component and field.raw', () => {
-    expect(parseType('date', fields)).toEqual(
-      expect.objectContaining({
-        Component: 'dateInput',
-        field: 'raw',
-      }),
-    )
-  })
-})
-
-describe('when type is year', () => {
-  it('returns yearInput component and field.raw', () => {
-    expect(parseType('year', fields)).toEqual(
-      expect.objectContaining({
-        Component: 'yearInput',
-        field: 'raw',
-      }),
-    )
-  })
-})
-
-describe('when type is yearMonth', () => {
-  it('returns monthYearInput component and field.raw', () => {
-    expect(parseType('yearMonth', fields)).toEqual(
-      expect.objectContaining({
-        Component: 'monthYearInput',
-        field: 'raw',
-      }),
-    )
-  })
-})
-
-describe('when type is avatar', () => {
-  it('returns dropAvatar component and field.raw', () => {
-    expect(parseType('avatar', fields)).toEqual(
-      expect.objectContaining({
-        Component: 'dropAvatar',
-        field: 'raw',
-      }),
-    )
-  })
-})
+//
+// describe('when type is date', () => {
+//   it('returns dateInput component and field.raw', () => {
+//     expect(parseType('date', fields)).toEqual(
+//       expect.objectContaining({
+//         Component: 'dateInput',
+//         field: 'raw',
+//       }),
+//     )
+//   })
+// })
+//
+// describe('when type is year', () => {
+//   it('returns yearInput component and field.raw', () => {
+//     expect(parseType('year', fields)).toEqual(
+//       expect.objectContaining({
+//         Component: 'yearInput',
+//         field: 'raw',
+//       }),
+//     )
+//   })
+// })
+//
+// describe('when type is yearMonth', () => {
+//   it('returns monthYearInput component and field.raw', () => {
+//     expect(parseType('yearMonth', fields)).toEqual(
+//       expect.objectContaining({
+//         Component: 'monthYearInput',
+//         field: 'raw',
+//       }),
+//     )
+//   })
+// })
+//
+// describe('when type is avatar', () => {
+//   it('returns dropAvatar component and field.raw', () => {
+//     expect(parseType('avatar', fields)).toEqual(
+//       expect.objectContaining({
+//         Component: 'dropAvatar',
+//         field: 'raw',
+//       }),
+//     )
+//   })
+// })

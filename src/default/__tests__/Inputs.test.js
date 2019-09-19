@@ -1,20 +1,11 @@
 import React from 'react'
 import renderer from 'react-test-renderer'
 
-import {
-  Input,
-  DropAvatar,
-  SelectInput,
-  RadioInput,
-  CheckboxInput,
-  YearInput,
-  MonthYearInput,
-  TimeInput,
-} from '../Inputs'
+import { Input, SelectInput, RadioInput, CheckboxInput } from '../Inputs'
 
-jest.mock('uploods', () => ({
-  DropPicture: props => <div {...props}>DropPicture</div>,
-}))
+// jest.mock('uploods', () => ({
+//   DropPicture: props => <div {...props}>DropPicture</div>,
+// }))
 
 describe('Input', () => {
   it('renders correctly', () => {
@@ -29,16 +20,16 @@ describe('Input', () => {
     expect(tree).toMatchSnapshot()
   })
 })
-
-describe('DropAvatar', () => {
-  it('renders correctly', () => {
-    const props = {
-      setValue: jest.fn(),
-    }
-    const tree = renderer.create(<DropAvatar {...props} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
+//
+// describe('DropAvatar', () => {
+//   it('renders correctly', () => {
+//     const props = {
+//       setValue: jest.fn(),
+//     }
+//     const tree = renderer.create(<DropAvatar {...props} />).toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
+// })
 
 describe('SelectInput', () => {
   it('renders correctly', () => {
@@ -79,46 +70,46 @@ describe('CheckboxInput', () => {
     expect(tree).toMatchSnapshot()
   })
 })
-
-describe('YearInput', () => {
-  it('renders correctly', () => {
-    const props = {
-      label: 'Foobar',
-      value: '',
-      onChange: jest.fn(),
-    }
-    const tree = renderer.create(<YearInput {...props} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
-
-describe('YearInput', () => {
-  it('renders correctly', () => {
-    const props = {
-      label: 'Foobar',
-      value: '',
-      onChange: jest.fn(),
-    }
-    const tree = renderer.create(<YearInput {...props} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
-
-describe('MonthYearInput', () => {
-  it('renders correctly', () => {
-    const props = {
-      label: 'Foobar',
-      value: '',
-      onChange: jest.fn(),
-    }
-    const tree = renderer.create(<MonthYearInput {...props} />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
-
-describe('TimeInput', () => {
-  it('renders correctly', () => {
-    const tree = renderer.create(<TimeInput />).toJSON()
-    expect(tree).toMatchSnapshot()
-  })
-})
+//
+// describe('YearInput', () => {
+//   it('renders correctly', () => {
+//     const props = {
+//       label: 'Foobar',
+//       value: '',
+//       onChange: jest.fn(),
+//     }
+//     const tree = renderer.create(<YearInput {...props} />).toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
+// })
+//
+// describe('YearInput', () => {
+//   it('renders correctly', () => {
+//     const props = {
+//       label: 'Foobar',
+//       value: '',
+//       onChange: jest.fn(),
+//     }
+//     const tree = renderer.create(<YearInput {...props} />).toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
+// })
+//
+// describe('MonthYearInput', () => {
+//   it('renders correctly', () => {
+//     const props = {
+//       label: 'Foobar',
+//       value: '',
+//       onChange: jest.fn(),
+//     }
+//     const tree = renderer.create(<MonthYearInput {...props} />).toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
+// })
+//
+// describe('TimeInput', () => {
+//   it('renders correctly', () => {
+//     const tree = renderer.create(<TimeInput />).toJSON()
+//     expect(tree).toMatchSnapshot()
+//   })
+// })
