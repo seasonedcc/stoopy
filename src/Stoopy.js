@@ -97,6 +97,14 @@ const Stoopy = ({
     totalSteps: size(normalizedFields),
   }
 
+  // NOTE: Repetitive code, clean up.
+  const FormHeader = layout.FormHeader || defaultLayout.FormHeader
+  const NextButton = layout.NextButton || defaultLayout.NextButton
+  const BackButton = layout.BackButton || defaultLayout.BackButton
+  const ProgressTracker =
+    layout.ProgressTracker || defaultLayout.ProgressTracker
+  const Loading = layout.Loading || defaultLayout.Loading
+
   // Action after each step back
   const onStepBack = ({ stepKey }) =>
     debounce(
@@ -149,16 +157,8 @@ const Stoopy = ({
     },
   )
 
-  // NOTE: Repetitive code, clean up.
-  const FormHeader = layout.FormHeader || defaultLayout.FormHeader
-  const NextButton = layout.NextButton || defaultLayout.NextButton
-  const BackButton = layout.BackButton || defaultLayout.BackButton
-  const ProgressTracker =
-    layout.ProgressTracker || defaultLayout.ProgressTracker
-  const Loading = layout.Loading || defaultLayout.Loading
-
   //  Destructuring properties to avoid errors if field is undefined
-  const { stepKey, name, optional } = field
+  const { stepKey, name, optional } = field || {}
 
   // Updates progress when step changes
   useEffect(
@@ -177,45 +177,43 @@ const Stoopy = ({
       invert.current = !invert.current
       firstRender.current = false
     }
+    // eslint-disable-next-line
   }, [name])
+
+  if (!field) {
+    return children || null
+  }
 
   // NOTE: Prettier render conditionals possible?
   return saving ? (
     <Loading />
   ) : (
-    <>
-      {field && (
-        <form key="form" onSubmit={onStepFoward}>
-          <FormHeader progress={progress} title={title} />
-          <CurrentField
-            {...animations}
-            field={field}
-            fields={fields}
-            formState={formState}
-            show={invert.current ? !visible : visible}
-          />
-          <div
-            style={{
-              display: 'flex',
-              width: '100%',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-              marginTop: 20,
-            }}
-          >
-            <BackButton
-              onClick={onStepBack(field)}
-              disabled={field.stepKey === firstStepKey.current}
-            />
-            <ProgressTracker progress={progress} />
-            <NextButton
-              disabled={!(optional || get(formState.validity, name))}
-            />
-          </div>
-        </form>
-      )}
-      {(!field && children) || null}
-    </>
+    <form key="form" onSubmit={onStepFoward}>
+      <FormHeader progress={progress} title={title} />
+      <CurrentField
+        {...animations}
+        field={field}
+        fields={fields}
+        formState={formState}
+        show={invert.current ? !visible : visible}
+      />
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginTop: 20,
+        }}
+      >
+        <BackButton
+          onClick={onStepBack(field)}
+          disabled={field.stepKey === firstStepKey.current}
+        />
+        <ProgressTracker progress={progress} />
+        <NextButton disabled={!(optional || get(formState.validity, name))} />
+      </div>
+    </form>
   )
 }
 
