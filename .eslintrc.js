@@ -6,5 +6,6 @@ module.exports = {
     'no-use-before-define': 0,
     'no-unused-expressions': 0,
     'no-param-reassign': 0,
+    'import/extensions': 0,
   },
 }
