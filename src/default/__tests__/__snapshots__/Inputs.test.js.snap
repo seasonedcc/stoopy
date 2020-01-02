@@ -17,7 +17,7 @@ exports[`CheckboxInput renders correctly 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-97 MuiCheckbox-root MuiCheckbox-colorSecondary MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiCheckbox-root MuiCheckbox-colorSecondary MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -36,7 +36,7 @@ exports[`CheckboxInput renders correctly 1`] = `
         >
           <input
             checked={false}
-            className="PrivateSwitchBase-input-100"
+            className="PrivateSwitchBase-input-107"
             data-indeterminate={false}
             disabled={false}
             onChange={[Function]}
@@ -82,6 +82,7 @@ exports[`Input renders correctly 1`] = `
     className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated Mui-error Mui-error"
     data-shrink={false}
     htmlFor="foobar"
+    id="foobar-label"
   >
     Foobar
   </label>
@@ -92,10 +93,12 @@ exports[`Input renders correctly 1`] = `
     <input
       aria-describedby="foobar-helper-text"
       aria-invalid={true}
+      autoFocus={false}
       className="MuiInputBase-input MuiInput-input"
       disabled={false}
       id="foobar"
       name="foobar"
+      onAnimationStart={[Function]}
       onBlur={[Function]}
       onChange={[Function]}
       onFocus={[Function]}
@@ -131,7 +134,7 @@ exports[`RadioInput renders correctly 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-97 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -150,14 +153,14 @@ exports[`RadioInput renders correctly 1`] = `
         >
           <input
             checked={false}
-            className="PrivateSwitchBase-input-100"
+            className="PrivateSwitchBase-input-107"
             disabled={false}
             onChange={[Function]}
             type="radio"
             value="foobar"
           />
           <div
-            className="PrivateRadioButtonIcon-root-113"
+            className="PrivateRadioButtonIcon-root-120"
           >
             <svg
               aria-hidden="true"
@@ -172,7 +175,7 @@ exports[`RadioInput renders correctly 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-114"
+              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-121"
               focusable="false"
               role="presentation"
               viewBox="0 0 24 24"
@@ -195,7 +198,7 @@ exports[`RadioInput renders correctly 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-97 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -214,14 +217,14 @@ exports[`RadioInput renders correctly 1`] = `
         >
           <input
             checked={false}
-            className="PrivateSwitchBase-input-100"
+            className="PrivateSwitchBase-input-107"
             disabled={false}
             onChange={[Function]}
             type="radio"
             value="foo"
           />
           <div
-            className="PrivateRadioButtonIcon-root-113"
+            className="PrivateRadioButtonIcon-root-120"
           >
             <svg
               aria-hidden="true"
@@ -236,7 +239,7 @@ exports[`RadioInput renders correctly 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-114"
+              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-121"
               focusable="false"
               role="presentation"
               viewBox="0 0 24 24"
@@ -259,7 +262,7 @@ exports[`RadioInput renders correctly 1`] = `
     >
       <span
         aria-disabled={false}
-        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-97 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+        className="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-104 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
         onBlur={[Function]}
         onDragLeave={[Function]}
         onFocus={[Function]}
@@ -278,14 +281,14 @@ exports[`RadioInput renders correctly 1`] = `
         >
           <input
             checked={false}
-            className="PrivateSwitchBase-input-100"
+            className="PrivateSwitchBase-input-107"
             disabled={false}
             onChange={[Function]}
             type="radio"
             value="bar"
           />
           <div
-            className="PrivateRadioButtonIcon-root-113"
+            className="PrivateRadioButtonIcon-root-120"
           >
             <svg
               aria-hidden="true"
@@ -300,7 +303,7 @@ exports[`RadioInput renders correctly 1`] = `
             </svg>
             <svg
               aria-hidden="true"
-              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-114"
+              className="MuiSvgIcon-root PrivateRadioButtonIcon-layer-121"
               focusable="false"
               role="presentation"
               viewBox="0 0 24 24"
@@ -343,11 +346,12 @@ exports[`SelectInput renders correctly 1`] = `
   >
     <div
       aria-haspopup="listbox"
-      className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input MuiInputBase-inputSelect"
+      aria-labelledby=" "
+      className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiInputBase-input MuiInput-input"
       onBlur={[Function]}
-      onClick={[Function]}
       onFocus={[Function]}
       onKeyDown={[Function]}
+      onMouseDown={[Function]}
       role="button"
       tabIndex={0}
     >
@@ -360,6 +364,7 @@ exports[`SelectInput renders correctly 1`] = `
       />
     </div>
     <input
+      onAnimationStart={[Function]}
       type="hidden"
       value=""
     />
